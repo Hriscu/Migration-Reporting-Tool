@@ -1,0 +1,10 @@
+.analytics-container {
+    position: sticky;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .analytics-container h1 {
+    font-size: 2rem;
+    color: rgb(73, 28, 129);
+  }

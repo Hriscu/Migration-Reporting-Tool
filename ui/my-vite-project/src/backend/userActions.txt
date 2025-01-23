@@ -1,0 +1,33 @@
+{"timestamp":"2024-12-09T22:06:41.551Z","action":"User clicked on BUTTON at position (216, 87)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-09T22:06:48.216Z","action":"User clicked on IMG at position (31, 48)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-09T22:06:49.284Z","action":"User clicked on BUTTON at position (210, 87)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-09T22:06:51.148Z","action":"User clicked on IMG at position (26, 42)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-09T22:09:18.584Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-09T22:09:23.457Z","action":"User clicked on CANVAS at position (446, 338)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-09T22:14:32.198Z","action":"User clicked on BUTTON at position (212, 89)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:46:32.495Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:46:52.055Z","action":"User clicked on H1 at position (1277, 199)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:46:57.130Z","action":"User clicked on NAV at position (1442, 34)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:46:57.516Z","action":"User clicked on NAV at position (1489, 29)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:46:57.865Z","action":"User clicked on NAV at position (1480, 22)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T09:47:10.597Z","action":"User clicked on A at position (81, 337)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T09:47:11.136Z","action":"User accessed page http://localhost:5173/profile","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T09:47:22.369Z","action":"User clicked on A at position (62, 214)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2024-12-10T09:47:22.371Z","action":"User accessed page http://localhost:5173/dashboard","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2024-12-10T09:47:43.342Z","action":"User clicked on CANVAS at position (674, 433)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2024-12-10T09:48:07.356Z","action":"User tried to access restricted page http://localhost:5173/admin","page":"http://localhost:5173/admin"}
+{"timestamp":"2024-12-10T09:50:44.011Z","action":"User accessed page http://localhost:5173/dashboard","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2024-12-10T09:50:55.872Z","action":"User clicked on IMG at position (919, 50)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T09:50:56.260Z","action":"User accessed page http://localhost:5173/profile","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T09:51:25.806Z","action":"User tried to access restricted page http://localhost:5173/admin","page":"http://localhost:5173/admin"}
+{"timestamp":"2024-12-10T10:01:00.333Z","action":"User clicked on A at position (58, 337)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T10:04:42.682Z","action":"User clicked on A at position (43, 332)","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T10:04:43.324Z","action":"User accessed page http://localhost:5173/profile","page":"http://localhost:5173/profile"}
+{"timestamp":"2024-12-10T10:04:47.443Z","action":"User tried to access restricted page http://localhost:5173/admin","page":"http://localhost:5173/admin"}
+{"timestamp":"2024-12-10T10:04:47.867Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T10:04:59.817Z","action":"User tried to access restricted page http://localhost:5173/admin","page":"http://localhost:5173/admin"}
+{"timestamp":"2024-12-10T10:05:00.266Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T10:05:43.188Z","action":"User clicked on DIV at position (823, 308)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T10:05:43.905Z","action":"User clicked on H1 at position (774, 162)","page":"http://localhost:5173/"}
+{"timestamp":"2024-12-10T10:06:40.577Z","action":"User tried to access restricted page http://localhost:5173/admin","page":"http://localhost:5173/admin"}
+{"timestamp":"2024-12-10T10:06:41.034Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}

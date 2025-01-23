@@ -1,0 +1,53 @@
+/* Overall dashboard container */
+.dashboard {
+  background-color: white;
+  padding: 20px;
+  min-height: 100vh; /* Ensures full height of the viewport */
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+  justify-content: center; /* Centers content vertically */
+  color: black;
+}
+
+/* Header styling */
+.dashboard-header {
+  position: sticky;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  color: rgb(73, 28, 129);
+}
+
+.dashboard-header p {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  margin-top: 5px;
+}
+
+/* Styling for the drawings container */
+.drawings {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%; /* Ensures the container takes up full width */
+  align-items: center; /* Centers the items horizontally */
+  justify-content: center; /* Vertically centers the content if needed */
+}
+
+iframe {
+  width: 800px;
+  height: 800px;
+  display: block;
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+.save-btn {
+  background-color: green;
+  text-align: right;
+}
