@@ -1,0 +1,140 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.sqlite3
+*.log
+db.sqlite3
+
+# Local environment settings
+.env
+*.env
+
+# Django migrations
+**/migrations/
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# PostgreSQL
+*.pgsql
+*.pgpass
+
+# MongoDB dumps and config files
+*.bson
+*.mongo
+
+# Media and static files
+media/
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# VS Code settings
+.vscode/
+
+# JetBrains (PyCharm) settings
+.idea/
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# pip file for dependencies (if using pipenv)
+Pipfile
+Pipfile.lock
+
+# Poetry dependencies (if using poetry)
+poetry.lock
+poetry.toml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# pytest cache
+.cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pytest settings
+.pytest_cache/
+
+# Pyre type checker
+.pyre/
+
+# Celery task queue logs
+celerybeat-schedule
+celerybeat.pid
+
+# Sphinx documentation
+docs/_build/
+
+# Database dumps
+*.sql
+*.db
+
+# Local test and build files
+.tox/
+dist/
+build/
+*.egg-info/
+
+# Other files and folders to ignore
+node_modules/
+.DS_Store
+
+# IDE settings files
+.vscode/
+.idea/
+
+# Ansible configuration and backup files
+*.retry
+*~
+
+# Yarn cache (if using Yarn)
+.yarn/
+.pnp.*
+
+# Security files and keys
+*.key
+*.pem
+
+# Editor swap files
+*.swp
+*.swo
+*.orig
+
+# pyenv
+.python-version
+
+# macOS resource forks
+._*
+
+# Additional files for logs and temp storage
+logs/
+tmp/
+*.bak
+*.backup
+*.log
