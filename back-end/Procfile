@@ -1,0 +1,1 @@
+web: gunicorn mirt_back.wsgi:application --log-file -
