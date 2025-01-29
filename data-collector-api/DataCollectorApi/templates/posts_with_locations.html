@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postări cu Locații</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .post { margin-bottom: 30px; }
+        .comments { margin-left: 20px; }
+        .comment { font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Postări cu Locații</h1>
+    {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.subreddit }} - {{ post.title }} - {{ post.location }} ({{ post.latitude }}, {{ post.longitude }})</h2>
+            <div class="comments">
+                <h3>Comentarii:</h3>
+                {% for comment in post.comments %}
+                    <p class="comment">{{ comment.text }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>
