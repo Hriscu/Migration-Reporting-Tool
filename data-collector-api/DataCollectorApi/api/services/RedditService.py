@@ -116,7 +116,7 @@ class RedditService:
             self.fetch_and_save_comments(post_data["post_id"], post_data["subreddit"])
 
     def fetch_and_save_birds_posts(self, limit=10):
-        self.fetch_and_save_posts("birds", limit)
+        self.fetch_and_save_posts("birding", limit)
 
     def fetch_and_save_aliens_posts(self, limit=10):
         self.fetch_and_save_posts("aliens", limit)
