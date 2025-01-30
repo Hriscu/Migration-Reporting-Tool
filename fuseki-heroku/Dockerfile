@@ -12,4 +12,4 @@ EXPOSE ${PORT}
 
 # Setează comanda de rulare a serverului
 CMD ["sh", "-c", "./fuseki-server --port $PORT"]
-#merge in heroookuuuu
+#merge in heroookuuuud
