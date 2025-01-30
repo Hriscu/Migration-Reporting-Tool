@@ -24,6 +24,28 @@ class RedditService:
         self.nlp = spacy.load("en_core_web_sm")
         self.geolocator = Nominatim(user_agent="reddit_location_extractor")
 
+    def extract_comments(self, comments):
+        comment_strings = []
+        for comment in comments:
+            # Presupunem că cheia care conține textul comentariului este 'text'
+            if 'text' in comment:  # Verificăm dacă există această cheie
+                comment_strings.append(comment['text'])
+        return comment_strings
+
+    def get_comments_from_subreddit(self, subreddit_name):
+        print(f"Fetching comments for subreddit: {subreddit_name}")
+        posts = list(self.repository.find({"subreddit": subreddit_name}))
+        comments = []
+        for post in posts:
+            post_comments = list(self.comments_repository.find({"post_id": post["_id"]}))
+            comments.extend(post_comments)
+        print(f"Fetched {len(comments)} comments.")
+    
+        # Extragem doar stringurile de comentarii
+        comment_strings = self.extract_comments(comments)
+        return comment_strings
+
+    
     def extract_location(self, text):
         """Extrage locațiile geopolitice din text și coordonatele lor."""
         doc = self.nlp(text)
