@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homeapp.urls')),
     path('hello/', include('hello_test.urls')),
+    path('mongo/', include('transform_mongo.urls')),
 ]
