@@ -245,3 +245,161 @@ def get_and_insert_bird_data(request):
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)
+
+
+# LOCATION
+
+
+def get_location_info_json(request):
+    sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    sparql.setQuery("""
+        SELECT ?place ?label ?abstract ?latitude ?longitude WHERE {
+            ?place rdf:type dbo:Place ;
+                rdfs:label ?label ;
+                dbo:abstract ?abstract .
+            
+            OPTIONAL { ?place geo:lat ?latitude . }
+            OPTIONAL { ?place geo:long ?longitude . }
+
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+        }
+        LIMIT 5000
+    """)
+
+    try:
+        results = sparql.query().convert()
+        locations = []
+
+        for result in results["results"]["bindings"]:
+            latitude = result.get("latitude", {}).get("value", "Unknown")
+            longitude = result.get("longitude", {}).get("value", "Unknown")
+
+
+            if latitude != "Unknown":
+                latitude = float(latitude)
+            if longitude != "Unknown":
+                longitude = float(longitude)
+
+            locations.append({
+                "uri": result["place"]["value"],
+                "name": result["label"]["value"],
+                "description": result["abstract"]["value"],
+                "coordinates": {
+                    "latitude": latitude,
+                    "longitude": longitude
+                }
+            })
+
+        return JsonResponse(locations, safe=False, json_dumps_params={'indent': 4})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+def get_location_info(request):
+    sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    # sparql.setQuery("""
+    #     SELECT ?place ?label ?abstract ?latitude ?longitude WHERE {
+    #         ?place rdf:type dbo:Location ;
+    #             rdfs:label ?label ;
+    #             dbo:abstract ?abstract .
+
+    #         OPTIONAL { ?place geo:lat ?latitude . }
+    #         OPTIONAL { ?place geo:long ?longitude . }
+
+    #         FILTER (lang(?label) = "en")
+    #         FILTER (lang(?abstract) = "en")
+    #     }
+    #     LIMIT 50
+    # """)
+
+    sparql.setQuery("""
+        SELECT ?place ?label ?abstract ?latitude ?longitude
+        WHERE {
+            ?place rdf:type ?type ;
+                rdfs:label ?label ;
+                dbo:abstract ?abstract ;
+                geo:lat ?latitude ;
+                geo:long ?longitude .
+
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+
+            FILTER (?type IN (dbo:City, dbo:Country, dbo:Region, dbo:Capital))
+
+            FILTER (strlen(?abstract) > 200)  
+        }
+        ORDER BY DESC(strlen(?abstract))  
+        LIMIT 250
+    """)
+
+    try:
+        results = sparql.query().convert()
+        locations = []
+
+        for result in results["results"]["bindings"]:
+            latitude = result.get("latitude", {}).get("value", "Unknown")
+            longitude = result.get("longitude", {}).get("value", "Unknown")
+
+            if latitude != "Unknown":
+                latitude = float(latitude)
+            if longitude != "Unknown":
+                longitude = float(longitude)
+
+            locations.append({
+                "uri": result["place"]["value"],
+                "name": result["label"]["value"],
+                "description": result["abstract"]["value"],
+                "coordinates": {
+                    "latitude": latitude,
+                    "longitude": longitude
+                }
+            })
+        return locations
+    except Exception as e:
+        print(f"Error fetching data from DBpedia: {str(e)}")
+        return []
+
+
+def map_location_to_ontology(data):
+    mapped_data = []
+
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for location in data:
+        cleaned_name = escape_special_characters(clean_value(location['name']))
+        cleaned_description = escape_special_characters(clean_value(location['description']))
+
+        latitude = location['coordinates'].get('latitude', "Unknown")
+        longitude = location['coordinates'].get('longitude', "Unknown")
+
+        insert_query = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+            PREFIX mirt: <{base_uri}>
+
+            INSERT DATA {{
+                <{location['uri']}> rdf:type mirt:Location ;
+                                        rdfs:label "{cleaned_name}" ;
+                                        mirt:hasDescription "{cleaned_description}" ;
+                                        geo:lat {latitude} ;
+                                        geo:long {longitude} .
+            }}
+        """
+        mapped_data.append(insert_query)
+
+    return mapped_data
+
+
+def get_and_insert_location_data(request):
+    locations_data = get_location_info(request)
+    mapped_data = map_location_to_ontology(locations_data)
+    insert_data_to_fuseki(mapped_data)
+
+    return HttpResponse("Data inserted successfully", status=200)
