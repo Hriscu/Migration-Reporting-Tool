@@ -22,9 +22,8 @@ class LDAModel:
         self.model = None
         self.preprocessor = Preprocessor()
         
-        # Obținem directorul curent al scriptului și îl concatenăm cu calea relativă
-        script_directory = os.path.dirname(__file__)  # Calea directorului în care se află scriptul curent
-        self.model_directory = os.path.join(script_directory, "SavedModels")  # Calea completă către directorul SavedModels
+        script_directory = os.path.dirname(__file__)  
+        self.model_directory = os.path.join(script_directory, "SavedModels")  
         self.model_filename = os.path.join(self.model_directory, "lda_model.model")
 
 
@@ -65,7 +64,6 @@ class LDAModel:
         :param data: Data for topic modeling
         """
         
-        # Asigură-te că directorul există înainte de a salva modelul
         if not os.path.exists(self.model_directory):
             os.makedirs(self.model_directory)
         
@@ -89,7 +87,6 @@ class LDAModel:
                                   passes=self.passes,
                                   alpha=self.alpha)
 
-        # Salvează modelul într-un director valid
         self.model.save(self.model_filename)
         return self.model, self.corpus, self.id2word
 

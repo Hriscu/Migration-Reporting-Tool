@@ -24,7 +24,6 @@ class RedditStreamService:
         self.preprocessor = DataPreprocessor()
         self.nlp = spacy.load("en_core_web_sm")
         self.geolocator = Nominatim(user_agent="reddit_location_extractor")
-        # Initialize the Reddit client here, but don't create the session yet
         self.reddit = None
 
     def extract_location(self, text):
@@ -89,14 +88,12 @@ class RedditStreamService:
             print(f"💬 Saved comment: {comment.body[:50]}...")
 
     async def stream_subreddit(self, subreddit_name):
-        # Initialize the Reddit client within the task context
         self.reddit = asyncpraw.Reddit(
             client_id=settings.REDDIT_CLIENT_ID,
             client_secret=settings.REDDIT_CLIENT_SECRET,
             user_agent=settings.REDDIT_USER_AGENT
         )
         
-        # Simply await subreddit instead of using async with
         subreddit = await self.reddit.subreddit(subreddit_name)
         print(f"🎧 Listening to {subreddit_name} in real-time...")
 
@@ -104,14 +101,14 @@ class RedditStreamService:
             await self.process_post(post)
 
     async def start_streaming(self):
-        subreddits = ["aliens", "birding", "migration"]
+        subreddits = ["aliens", "birding", "IWantOut"]
         tasks = [self.stream_subreddit(sub) for sub in subreddits]
 
         await asyncio.gather(*tasks)
 
     async def close_reddit_session(self):
         if self.reddit:
-            await self.reddit.close()  # Close the Reddit session properly
+            await self.reddit.close()  
 
 if __name__ == "__main__":
     service = RedditStreamService()
@@ -120,5 +117,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error during streaming: {e}")
     finally:
-        # Ensure the session is closed after streaming ends
         asyncio.run(service.close_reddit_session())

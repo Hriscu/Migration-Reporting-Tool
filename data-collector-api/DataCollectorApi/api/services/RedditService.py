@@ -27,8 +27,7 @@ class RedditService:
     def extract_comments(self, comments):
         comment_strings = []
         for comment in comments:
-            # Presupunem că cheia care conține textul comentariului este 'text'
-            if 'text' in comment:  # Verificăm dacă există această cheie
+            if 'text' in comment:  
                 comment_strings.append(comment['text'])
         return comment_strings
 
@@ -41,22 +40,18 @@ class RedditService:
             comments.extend(post_comments)
         print(f"Fetched {len(comments)} comments.")
     
-        # Extragem doar stringurile de comentarii
         comment_strings = self.extract_comments(comments)
         return comment_strings
 
     
     def extract_location(self, text):
-        """Extrage locațiile geopolitice din text și coordonatele lor."""
         doc = self.nlp(text)
         locations = [ent.text for ent in doc.ents if ent.label_ == "GPE"]
 
-        # Extragem o singură locație (dacă există mai multe, o preluăm doar pe prima)
         location = locations[0] if locations else None
         latitude = None
         longitude = None
 
-        # Obține coordonatele locației dacă este disponibilă
         if location:
             try:
                 geocode_result = self.geolocator.geocode(location)
@@ -72,22 +67,20 @@ class RedditService:
         """Extrage cuvinte cheie din familia lexicală a subreddit-ului."""
         if subreddit_name == "aliens":
             keywords = ["alien", "extraterrestrial", "ufo", "space", "contact", "life"]
-        elif subreddit_name == "birds":
+        elif subreddit_name == "birding":
             keywords = ["bird", "birds", "migration", "feathers", "flight", "avian"]
-        elif subreddit_name == "migration":
+        elif subreddit_name == "IWantOut":
             keywords = ["migration", "refugees", "displacement", "border", "asylum", "human movement"]
         else:
             keywords = []
         return [word for word in keywords if word.lower() in text.lower()]
 
     def extract_media_urls(self, media):
-        """Extrage URL-uri de media (video sau imagini)."""
         if media and isinstance(media, dict):
             return [media.get("reddit_video", {}).get("fallback_url")] if "reddit_video" in media else []
         return []
 
     def fetch_and_save_comments(self, post_id, subreddit_name):
-        """Fetch and save comments for a given post."""
         post = self.reddit.submission(id=post_id)
         post.comments.replace_more(limit=10)
         count = 0
@@ -114,7 +107,6 @@ class RedditService:
                 break
 
     def fetch_and_save_posts(self, subreddit_name, limit=10):
-        """Fetch and save posts from a given subreddit."""
         subreddit = self.reddit.subreddit(subreddit_name)
         for post in subreddit.hot(limit=limit):
             location_data = self.extract_location(post.title + " " + (post.selftext or ""))
@@ -143,5 +135,5 @@ class RedditService:
     def fetch_and_save_aliens_posts(self, limit=10):
         self.fetch_and_save_posts("aliens", limit)
 
-    def fetch_and_save_migration_posts(self, limit=10):
-        self.fetch_and_save_posts("migration", limit)
+    def fetch_and_save_humans_posts(self, limit=10):
+        self.fetch_and_save_posts("IWantOut", limit)

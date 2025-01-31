@@ -1,0 +1,9 @@
+Training a new model.
+LDA visualization saved!
+(0, '0.019*"get" + 0.014*"country" + 0.010*"go" + 0.008*"here" + 0.008*"also" + 0.008*"need" + 0.008*"year" + 0.008*"think" + 0.007*"citizenship" + 0.007*"look"')
+(1, '0.012*"get" + 0.010*"work" + 0.009*"move" + 0.009*"want" + 0.009*"also" + 0.008*"see" + 0.008*"then" + 0.008*"so" + 0.007*"live" + 0.007*"people"')
+(2, '0.014*"country" + 0.009*"perform_automatically" + 0.009*"bot_action" + 0.009*"contact_moderator_question_concern" + 0.008*"move_country" + 0.008*"think" + 0.008*"time" + 0.007*"asylum" + 0.007*"political_commentaryrant" + 0.007*"post_offtopic"')
+(3, '0.012*"country" + 0.011*"get" + 0.008*"even" + 0.008*"work" + 0.008*"year" + 0.007*"most" + 0.006*"more" + 0.006*"well" + 0.005*"allow" + 0.005*"usually"')
+(4, '0.011*"want" + 0.010*"spanish" + 0.009*"get" + 0.008*"citizen" + 0.008*"year" + 0.008*"need" + 0.008*"move" + 0.007*"time" + 0.007*"know" + 0.007*"university"')
+(5, '0.017*"get" + 0.017*"work" + 0.016*"visa" + 0.012*"need" + 0.012*"just" + 0.011*"job" + 0.011*"country" + 0.008*"year" + 0.007*"take" + 0.006*"go"')
+Model saved!

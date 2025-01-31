@@ -1,0 +1,9 @@
+Training a new model.
+LDA visualization saved!
+(0, '0.026*"see" + 0.016*"thank" + 0.013*"so" + 0.012*"cardinal" + 0.011*"also" + 0.010*"love" + 0.010*"very" + 0.008*"year" + 0.008*"spot" + 0.007*"look"')
+(1, '0.018*"just" + 0.014*"love" + 0.014*"see" + 0.012*"get" + 0.012*"so" + 0.012*"cardinal" + 0.011*"time" + 0.010*"look" + 0.010*"so_many" + 0.010*"go"')
+(2, '0.027*"see" + 0.020*"bird" + 0.020*"love" + 0.014*"beautiful" + 0.011*"never_see" + 0.011*"time" + 0.011*"just" + 0.009*"so" + 0.009*"think" + 0.009*"look"')
+(3, '0.029*"see" + 0.015*"think" + 0.009*"male" + 0.009*"photo" + 0.009*"so" + 0.009*"winter" + 0.008*"bird" + 0.008*"now" + 0.007*"as" + 0.007*"flock"')
+(4, '0.037*"see" + 0.028*"bird" + 0.015*"get" + 0.012*"here" + 0.011*"year" + 0.010*"so" + 0.009*"look" + 0.008*"too" + 0.008*"band" + 0.008*"same"')
+(5, '0.020*"see" + 0.019*"so" + 0.012*"great" + 0.011*"get" + 0.011*"photo" + 0.009*"very" + 0.008*"really" + 0.008*"way" + 0.008*"tree" + 0.008*"hawk"')
+Model saved!
