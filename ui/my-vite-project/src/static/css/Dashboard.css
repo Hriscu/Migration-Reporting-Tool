@@ -1,53 +1,154 @@
-/* Overall dashboard container */
-.dashboard {
+/* General Styles */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
   background-color: white;
   padding: 20px;
-  min-height: 100vh; /* Ensures full height of the viewport */
-  margin-top: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers content horizontally */
-  justify-content: center; /* Centers content vertically */
   color: black;
+  overflow: hidden;
 }
 
-/* Header styling */
-.dashboard-header {
-  position: sticky;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.dashboard-header h1 {
+/* Title */
+.dashboard-title {
   font-size: 2rem;
+  font-weight: bold;
   color: rgb(73, 28, 129);
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.dashboard-header p {
-  font-size: 1.1rem;
-  color: #7f8c8d;
-  margin-top: 5px;
-}
-
-/* Styling for the drawings container */
-.drawings {
+/* Map container */
+.map-container {
+  width: 100%;
+  max-width: 900px;
+  height: 70%;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%; /* Ensures the container takes up full width */
-  align-items: center; /* Centers the items horizontally */
-  justify-content: center; /* Vertically centers the content if needed */
+  justify-content: center;
 }
 
-iframe {
-  width: 800px;
-  height: 800px;
-  display: block;
-  border: 2px solid red;
+#map {
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
 }
 
-.save-btn {
-  background-color: green;
-  text-align: right;
+/* Toggle Panel Button */
+.toggle-panel-btn {
+  z-index: 1002;
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s ease-in-out;
+  position: fixed; 
+  top: 25%;
+  left: 21%;
+  transform: translateY(-50%); 
+}
+
+.toggle-panel-btn:hover {
+  background: #0056b3;
+}
+
+/* Style for close button when panel is open */
+.toggle-panel-btn.close-btn {
+  background: red; /* Butonul devine roșu */
+  color: white;
+}
+
+.toggle-panel-btn.close-btn:hover {
+  background: darkred; /* Schimbă culoarea la hover pentru un efect vizual */
+}
+
+/* Control Panel */
+.control-panel {
+  position: fixed;
+  top: 0;
+  right: -220px;
+  width: 220px;
+  height: 100%;
+  z-index: 1001;
+  background: white;
+  box-shadow: -3px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease-in-out;
+}
+
+.control-panel.open {
+  right: 0;
+}
+
+.control-panel h3 {
+  margin-top: 70px; 
+  margin-bottom: 10px; 
+}
+
+.control-panel p {
+  margin-top: 5px; 
+  margin-bottom: 15px; 
+}
+
+/* Marker buttons */
+.marker-buttons button {
+  margin: 1px;
+  padding: 3px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #ddd;
+  transition: all 0.3s ease;
+}
+
+.marker-buttons button.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Save buttons */
+.save-buttons button {
+  margin: 3px;
+  padding: 6px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Topic buttons */
+.topic-buttons button {
+  margin: 3px;
+  padding: 6px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .map-container {
+      height: 60%;
+  }
+
+  .dashboard-title {
+      font-size: 1.8rem;
+  }
+
+  .toggle-panel-btn {
+      font-size: 14px;
+  }
+
+  .control-panel {
+      width: 200px;
+  }
 }

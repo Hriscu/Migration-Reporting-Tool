@@ -1,14 +1,14 @@
 import React from 'react';
-import '../static/css/Analytics.css';
+import '../static/css/About.css';
 import UserMonitor from '../components/UserMonitor'; 
 
-const Analytics = () => {
+const About = () => {
   return (
-    <div className="analytics-container">
+    <div className="about-container">
       <UserMonitor />
       <h1>Hot topics!</h1>
     </div>
   );
 };
 
-export default Analytics;
+export default About;

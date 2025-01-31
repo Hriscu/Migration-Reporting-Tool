@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewNavbar from './components/NewNavbar'; 
 import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
-import Profile from './pages/Profile';
+import About from './pages/About';
+import BirdMigrationsStats from './pages/BirdMigrationsStats';
+import BirdMigrationsSubtopics from './pages/BirdMigrationsSubtopics';
 import AccessRestricted from './pages/AccessRestricted';
-import Login from './pages/Login';
-import Register from './pages/Register';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
@@ -21,11 +20,11 @@ function App() {
       
       <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/BirdMigrationsStats" element={<BirdMigrationsStats />} />
+          <Route path="/BirdMigrationsSubtopics" element={<BirdMigrationsSubtopics />} />
         </Routes>
       </div>
     </Router>

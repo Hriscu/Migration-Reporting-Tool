@@ -1,0 +1,10 @@
+.birdMigrationsSubtopics-container {
+    position: sticky;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .birdMigrationsSubtopics-container h1 {
+    font-size: 2rem;
+    color: rgb(73, 28, 129);
+  }

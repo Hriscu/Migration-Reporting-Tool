@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import '../static/css/NewNavbar.css';
 
@@ -11,31 +11,25 @@ const NewNavbar = () => {
     };
 
     return (
-        <>
-            <header>
-                <div className="navbar">
-                    <div className="logo">
-                        <img src={logo} alt="Logo" />
-                        <h2>Migration Reporting Tool</h2>
-                    </div>
+        <header>
+            <nav className="navbar">
+                <Link to="/dashboard" className="logo">
+                    <img src={logo} alt="Logo" />
+                    <h2>Migration Reporting Tool</h2>
+                </Link>
 
-                    <div className={`hamburger-btn ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
-                        &#9776;
-                    </div>
+                <button className="hamburger-btn" onClick={toggleMenu}>
+                    ☰
+                </button>
 
-                    <nav className={`links ${menuOpen ? 'show-menu' : ''}`}>
-                        <div className="close-btn" onClick={toggleMenu}>
-                            &times;
-                        </div>
-                        <a href="/dashboard">Dashboard</a>
-                        <a href="/profile">Profile</a>
-                        <div className='login-btn'>
-                            <Link to="/login">Login</Link>
-                        </div>
-                    </nav>
-                </div>
-            </header>
-        </>
+                <ul className={`links ${menuOpen ? 'show-menu' : ''}`}>
+                    <li><Link to="/dashboard">Dashboard</Link></li>
+                    <li><Link to="/about">About</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                    <button className="close-btn" onClick={toggleMenu}>✖</button>
+                </ul>
+            </nav>
+        </header>
     );
 };
 
