@@ -118,7 +118,7 @@ def get_bird_info(request):
             FILTER (lang(?label) = "en")
             FILTER (lang(?abstract) = "en")
         }
-        LIMIT 500
+        LIMIT 250
     """)
 
     try:
@@ -161,7 +161,7 @@ def escape_special_characters(value):
     return value
 
 
-def map_to_ontology(data):
+def map_bird_to_ontology(data):
     mapped_data = []
 
     base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
@@ -241,7 +241,7 @@ def insert_equivalence_to_fuseki():
 def get_and_insert_bird_data(request):
     insert_equivalence_to_fuseki()
     birds_data = get_bird_info(request)
-    mapped_data = map_to_ontology(birds_data)
+    mapped_data = map_bird_to_ontology(birds_data)
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)
