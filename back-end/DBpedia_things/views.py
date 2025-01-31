@@ -1,0 +1,247 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.http import HttpResponse
+from SPARQLWrapper import SPARQLWrapper, JSON, XML
+from rdflib import Graph
+import re
+
+def get_bird_info_json(request):
+    sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    sparql.setQuery("""
+        SELECT ?bird ?label ?abstract ?scientificName ?family ?species ?genus ?thumbnail ?url WHERE {
+            ?bird rdf:type dbo:Bird ;
+                rdfs:label ?label ;
+                dbo:abstract ?abstract .
+            
+            OPTIONAL { ?bird dbp:scientificName ?scientificName . }
+            OPTIONAL { ?bird dbp:family ?family . }
+            OPTIONAL { ?bird dbp:species ?species . }
+            OPTIONAL { ?bird dbp:genus ?genus . }
+            OPTIONAL { ?bird dbo:thumbnail ?thumbnail . }
+            OPTIONAL { ?bird dbp:url ?url . }
+            
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+        }
+        LIMIT 5000
+    """)
+
+    try:
+        results = sparql.query().convert()
+        birds = []
+
+        for result in results["results"]["bindings"]:
+            birds.append({
+                "uri": result["bird"]["value"],
+                "name": result["label"]["value"],
+                "description": result["abstract"]["value"],
+                "scientific_name": result.get("scientificName", {}).get("value", "Unknown"),
+                "family": result.get("family", {}).get("value", "Unknown"),
+                "species": result.get("species", {}).get("value", "Unknown"),
+                "genus": result.get("genus", {}).get("value", "Unknown"),
+                "thumbnail": result.get("thumbnail", {}).get("value", None),
+                "url": result.get("url", {}).get("value", None),
+            })
+
+        return JsonResponse(birds, safe=False, json_dumps_params={'indent': 4})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+def get_bird_info_rdf(request):
+    sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+    sparql.setReturnFormat("xml")
+
+    sparql.setQuery("""
+        CONSTRUCT {
+            ?bird rdf:type dbo:Bird ;
+                  rdfs:label ?label ;
+                  dbo:abstract ?abstract ;
+                  dbp:scientificName ?scientificName ;
+                  dbp:family ?family ;
+                  dbp:species ?species ;
+                  dbp:genus ?genus ;
+                  dbo:thumbnail ?thumbnail ;
+                  dbp:url ?url .
+        } WHERE {
+            ?bird rdf:type dbo:Bird ;
+                  rdfs:label ?label ;
+                  dbo:abstract ?abstract .
+
+            OPTIONAL { ?bird dbp:scientificName ?scientificName . }
+            OPTIONAL { ?bird dbp:family ?family . }
+            OPTIONAL { ?bird dbp:species ?species . }
+            OPTIONAL { ?bird dbp:genus ?genus . }
+            OPTIONAL { ?bird dbo:thumbnail ?thumbnail . }
+            OPTIONAL { ?bird dbp:url ?url . }
+
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+        }
+        LIMIT 5000
+    """)
+
+    try:
+        results = sparql.query().response.read().decode('utf-8')  # citire ca șir de caractere
+
+        g = Graph()
+        g.parse(data=results, format="xml")
+
+        formatted_rdf = g.serialize(format="pretty-xml")
+
+        return HttpResponse(formatted_rdf, content_type="application/rdf+xml")
+
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}", status=500)
+    
+
+def get_bird_info(request):
+    sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+    sparql.setReturnFormat(JSON)
+
+    sparql.setQuery("""
+        SELECT ?bird ?label ?abstract ?scientificName ?family ?species ?genus ?thumbnail ?url WHERE {
+            ?bird rdf:type dbo:Bird ;
+                  rdfs:label ?label ;
+                  dbo:abstract ?abstract .
+
+            OPTIONAL { ?bird dbp:scientificName ?scientificName . }
+            OPTIONAL { ?bird dbp:family ?family . }
+            OPTIONAL { ?bird dbp:species ?species . }
+            OPTIONAL { ?bird dbp:genus ?genus . }
+            OPTIONAL { ?bird dbo:thumbnail ?thumbnail . }
+            OPTIONAL { ?bird dbp:url ?url . }
+
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+        }
+        LIMIT 500
+    """)
+
+    try:
+        results = sparql.query().convert()
+        birds_data = []
+
+        for result in results["results"]["bindings"]:
+            bird = {
+                "uri": result["bird"]["value"],
+                "name": result["label"]["value"],
+                "description": result["abstract"]["value"],
+                "scientific_name": result.get("scientificName", {}).get("value", "Unknown"),
+                "family": result.get("family", {}).get("value", "Unknown"),
+                "species": result.get("species", {}).get("value", "Unknown"),
+                "genus": result.get("genus", {}).get("value", "Unknown"),
+                "thumbnail": result.get("thumbnail", {}).get("value", "Unknown"),
+                "url": result.get("url", {}).get("value", "Unknown"),
+            }
+            birds_data.append(bird)
+
+        return birds_data
+    except Exception as e:
+        print(f"Error fetching data from DBpedia: {str(e)}")
+        return []
+
+
+def clean_value(value):
+    if value is None or value.strip() == "":
+        return "Unknown"
+    return value.replace('"', "'")
+
+
+def escape_special_characters(value):
+    if value is None:
+        return "Unknown"
+    value = value.replace("\\", "\\\\")
+    value = value.replace('"', '\\"')
+    value = value.replace("'", "\\'")
+    value = value.replace("\n", "\\n").replace("\r", "\\r")
+    return value
+
+
+def map_to_ontology(data):
+    mapped_data = []
+
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for bird in data:
+        cleaned_species = escape_special_characters(clean_value(bird['species']))
+        cleaned_scientific_name = escape_special_characters(clean_value(bird['scientific_name']))
+        cleaned_family = escape_special_characters(clean_value(bird['family']))
+        cleaned_genus = escape_special_characters(clean_value(bird['genus']))
+        cleaned_thumbnail = escape_special_characters(clean_value(bird['thumbnail']))
+        cleaned_url = escape_special_characters(clean_value(bird['url']))
+        cleaned_description = escape_special_characters(clean_value(bird['description']))
+        cleaned_name = escape_special_characters(clean_value(bird['name']))
+
+        species_values = cleaned_species.split(",") if "," in cleaned_species else [cleaned_species]
+        species_statements = " ".join(f'<{bird["uri"]}> mirt:hasSpecies "{species.strip()}" .' for species in species_values)
+
+        insert_query = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX mirt: <{base_uri}>
+
+            INSERT DATA {{
+                <{bird['uri']}> rdf:type mirt:Bird ;
+                                mirt:hasScientificName "{cleaned_scientific_name}" ;
+                                mirt:hasFamily "{cleaned_family}" ;
+                                mirt:hasGenus "{cleaned_genus}" ;
+                                mirt:hasThumbnail "{cleaned_thumbnail}" ;
+                                mirt:hasUrl "{cleaned_url}" ;
+                                mirt:hasDescription "{cleaned_description}" ;
+                                rdfs:label "{cleaned_name}" .
+                {species_statements}
+            }}
+        """
+        mapped_data.append(insert_query)
+
+    return mapped_data
+
+
+def insert_data_to_fuseki(queries):
+    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/MigrationReportingTool/update")
+    sparql.setMethod("POST")
+    sparql.setReturnFormat(JSON)
+
+    for query in queries:
+        sparql.setQuery(query)
+        try:
+            sparql.query()
+        except Exception as e:
+            print(f"Error inserting data into Fuseki: {str(e)}")
+
+
+def insert_equivalence_to_fuseki():
+    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/MigrationReportingTool/update")
+    sparql.setMethod("POST")
+    sparql.setReturnFormat(JSON)
+
+    insert_equivalence_query = """
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+        PREFIX mirt_ont: <http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#>
+
+        INSERT DATA {
+            mirt_ont:Bird owl:equivalentClass dbo:Bird .
+        }
+    """
+
+    sparql.setQuery(insert_equivalence_query)
+
+    try:
+        sparql.query()
+        print("Equivalence inserted successfully")
+    except Exception as e:
+        print(f"Error inserting data into Fuseki: {str(e)}")
+
+
+def get_and_insert_bird_data(request):
+    insert_equivalence_to_fuseki()
+    birds_data = get_bird_info(request)
+    mapped_data = map_to_ontology(birds_data)
+    insert_data_to_fuseki(mapped_data)
+
+    return HttpResponse("Data inserted successfully", status=200)

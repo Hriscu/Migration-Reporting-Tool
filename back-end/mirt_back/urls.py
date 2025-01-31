@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('homeapp.urls')),
     path('hello/', include('hello_test.urls')),
     path('mongo/', include('transform_mongo.urls')),
+    path('dbpedia/', include('DBpedia_things.urls')),
 ]
