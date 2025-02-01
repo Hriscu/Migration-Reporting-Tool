@@ -97,7 +97,7 @@ header {
     align-items: center;
     justify-content: center;
     transition: 0.3s ease-in-out;
-    z-index: 9998; /* Meniul mobil va fi sub header-ul */
+    z-index: 9998; 
   }
 
   .links.show-menu {

@@ -1,0 +1,31 @@
+.contact-container {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .contact-container h1 {
+    font-size: 2rem;
+    color: rgb(73, 28, 129);
+  }
+  
+  .contact-info {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    text-align: left; /* Aliniem textul la stânga */
+    display: inline-block; /* Ne asigurăm că textul nu are spații mari între paragrafe */
+  }
+  
+  .contact-info p {
+    margin: 5px 0; /* Reducem marginile pentru a elimina spațiile suplimentare */
+  }
+  
+  .contact-info a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+  

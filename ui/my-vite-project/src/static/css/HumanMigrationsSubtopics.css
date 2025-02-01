@@ -1,4 +1,4 @@
-.birdMigrationsSubtopics-container {
+.humanMigrationsSubtopics-container {
   text-align: center;
   margin: 20px auto;
   max-width: 800px;
@@ -8,7 +8,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.birdMigrationsSubtopics-container h1 {
+.humanMigrationsSubtopics-container h1 {
   font-size: 2rem;
   color: rgb(73, 28, 129);
   margin-bottom: 20px;

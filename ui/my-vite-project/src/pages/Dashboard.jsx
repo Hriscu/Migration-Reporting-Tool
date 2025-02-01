@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
+import UserMonitor from '../components/UserMonitor'; 
 import '../static/css/Dashboard.css';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -113,7 +114,19 @@ const Dashboard = () => {
                 "Human Migrations": humanLayer,
             }
         ).addTo(map);
-
+            // Detectează dacă dispozitivul este mobil
+        const isMobile = window.innerWidth <= 768;
+    
+        if (isMobile) {
+            // Modifică comportamentul pentru dispozitive mobile: click în loc de hover
+            const layerToggle = document.querySelector('.leaflet-control-layers-toggle');
+            if (layerToggle) {
+                layerToggle.addEventListener('click', () => {
+                    const controlContainer = document.querySelector('.leaflet-control-layers');
+                    controlContainer.classList.toggle('open');
+                });
+            }
+        }
         const updateMarkers = () => {
             birdLayer.clearLayers();
             birdMigrations.forEach(event =>
@@ -212,6 +225,7 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-container">
+            <UserMonitor />  
             <h1 className="dashboard-title">Dashboard</h1>
 
             <div className="map-container">
@@ -234,6 +248,7 @@ const Dashboard = () => {
             >
                 {isPanelOpen ? 'Close' : 'Panel'}
             </button>
+            
             {/* Control Panel */}
             <div className={`control-panel ${isPanelOpen ? 'open' : ''}`}>
                 <h3>Control Panel</h3>
@@ -252,16 +267,16 @@ const Dashboard = () => {
                 <h4>Topic distribution</h4>
                 <div className="topic-buttons">
                     <h5>Bird migrations</h5>
-                    <button onClick={() => navigate('/BirdMigrationsStats')}>Stats</button>
                     <button onClick={() => navigate('/BirdMigrationsSubtopics')}>Subtopics</button>
-
+                    <button onClick={() => navigate('/BirdMigrationsStats')}>Stats</button>
+                    
                     <h5>Extraterrestrial migrations</h5>
-                    <button onClick={() => navigate('/ExtraterrestrialMigrationsStats')}>Stats</button>
                     <button onClick={() => navigate('/ExtraterrestrialMigrationsSubtopics')}>Subtopics</button>
+                    <button onClick={() => navigate('/ExtraterrestrialMigrationsStats')}>Stats</button>
 
                     <h5>Human migrations</h5>
-                    <button onClick={() => navigate('/HumanMigrationsStats')}>Stats</button>
                     <button onClick={() => navigate('/HumanMigrationsSubtopics')}>Subtopics</button>
+                    <button onClick={() => navigate('/HumanMigrationsStats')}>Stats</button>
                 </div>
             </div>
         </div>

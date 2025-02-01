@@ -46,11 +46,12 @@
   cursor: pointer;
   margin-top: 15px;
   transition: background 0.3s ease-in-out;
-  position: fixed; 
-  top: 25%;
-  left: 21%;
-  transform: translateY(-50%); 
+  position: absolute; 
+  top: 23%; 
+  left: 21%; 
 }
+
+
 
 .toggle-panel-btn:hover {
   background: #0056b3;

@@ -27,7 +27,7 @@ class StressTestUser(HttpUser):
     @task
     def stress_test_log(self):
         # Task to make a POST request to the "/log" endpoint with a sample payload
-        payload = {"timestamp": "2024-12-08T12:00:00Z", "action": "Stress", "page": "/analytics"}
+        payload = {"timestamp": "2024-12-08T12:00:00Z", "action": "Stress", "page": "/about"}
         self.client.post("/log", json=payload)
 
 # Command to run the stress test:
