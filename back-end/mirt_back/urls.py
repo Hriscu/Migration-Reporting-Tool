@@ -23,4 +23,5 @@ urlpatterns = [
     path('hello/', include('hello_test.urls')),
     path('mongo/', include('transform_mongo.urls')),
     path('dbpedia/', include('DBpedia_things.urls')),
+    path('associate/', include('associate_things.urls')),
 ]
