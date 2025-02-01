@@ -79,3 +79,29 @@
 * ⌛ considering significant aspects with respect to the interoperability, performance, and/or security of the implemented solution.
 
 <p> The presentation of the project has allocated maximum 20 minutes per team, including questions. </p>
+
+## License
+
+Distributed under the MIT License. See LICENSE for more information.
+
+## Contact
+
+Hriscu Alexandru-Gabriel - hriscu853@gmail.com
+
+Iațu Antonio - antonio.iatu@yahoo.com
+
+Project Link: [https://github.com/Hriscu/Migration-Reporting-Tool](https://github.com/Hriscu/Migration-Reporting-Tool)
+
+## Acknowledgements
+
+This section is to mention useful resources and libraries that we have used in our project.
+
+ - [geoPy](https://geopy.readthedocs.io/en/stable/)
+ - [spaCy](https://spacy.io/)
+ - [MongoDB Atlas](https://www.mongodb.com/docs/atlas/)
+ - [Django](https://www.djangoproject.com/)
+ - [Vite](https://vite.dev/guide/)
+ - [LDAvis](https://github.com/cpsievert/LDAvis)
+ - [PRAW](https://praw.readthedocs.io/en/stable/)
+ - [Async PRAW](https://asyncpraw.readthedocs.io/en/stable/)
+
