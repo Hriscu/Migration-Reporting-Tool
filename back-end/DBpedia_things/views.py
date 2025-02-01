@@ -202,7 +202,7 @@ def map_bird_to_ontology(data):
 
 
 def insert_data_to_fuseki(queries):
-    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/MigrationReportingTool/update")
+    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/birds-and-locations/update")
     sparql.setMethod("POST")
     sparql.setReturnFormat(JSON)
 
@@ -215,7 +215,7 @@ def insert_data_to_fuseki(queries):
 
 
 def insert_equivalence_to_fuseki():
-    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/MigrationReportingTool/update")
+    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/birds-and-locations/update")
     sparql.setMethod("POST")
     sparql.setReturnFormat(JSON)
 

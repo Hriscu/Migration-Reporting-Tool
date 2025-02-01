@@ -145,7 +145,7 @@ def map_posts_to_ontology(data):
 
 
 def insert_data_to_fuseki(queries):
-    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/MigrationReportingTool/update")
+    sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/posts-and-comments/update")
     sparql.setMethod("POST")
     sparql.setReturnFormat(JSON)
 
