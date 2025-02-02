@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Report - MiRT (Migration Reporting Tool)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Technical Report - Migration Reporting Tool (MiRT)</h1>
+        <p><strong>Author:</strong> Development Team<br>
+        <strong>Date:</strong> February 2025</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#data-structures">Internal Data Structures</a></li>
+            <li><a href="#api-architecture">API Architecture</a></li>
+            <li><a href="#rdf-models">RDF-Based Knowledge Models</a></li>
+            <li><a href="#external-sources">Use of External Data Sources</a></li>
+            <li><a href="#linked-data">Linked Data Conformance</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>The Migration Reporting Tool (MiRT) is an intelligent web system designed to visualize migration events of various entities (birds, humans, robots, extraterrestrial beings) in real-time using interactive maps. This report outlines the technical architecture, internal data models, API specifications, and the integration of external knowledge sources.</p>
+        </section>
+
+        <section id="data-structures">
+            <h2>Internal Data Structures</h2>
+            <p>MiRT manages multiple data structures to handle migration events, user interactions, and metadata. The core models include:</p>
+            <ul>
+                <li><strong>MigrationEvent:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
+                <li><strong>UserPreferences:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
+                <li><strong>StatisticalData:</strong> Aggregates data for generating migration statistics and trends.</li>
+            </ul>
+        </section>
+
+        <section id="api-architecture">
+            <h2>API Architecture</h2>
+            <p>MiRT employs RESTful APIs to manage data interactions:</p>
+            <ul>
+                <li><strong>GET /migrations:</strong> Retrieves migration events with optional filters for entity type, date range, and location.</li>
+                <li><strong>POST /report:</strong> Allows users to report new migration events with metadata.</li>
+                <li><strong>GET /statistics:</strong> Provides statistical summaries using aggregated data.</li>
+                <li><strong>GraphQL Endpoint:</strong> Offers flexible querying capabilities for advanced data analytics.</li>
+            </ul>
+        </section>
+
+        <section id="rdf-models">
+            <h2>RDF-Based Knowledge Models</h2>
+            <p>MiRT leverages RDF to structure and semantically enrich migration data. We utilize vocabularies from DBpedia and Wikidata to ensure data interoperability:</p>
+            <ul>
+                <li><strong>Ontology Design:</strong> Defines classes like <em>MigrationEvent</em>, <em>Entity</em>, and <em>Location</em>.</li>
+                <li><strong>SPARQL Endpoint:</strong> Enables complex queries to explore migration patterns and relationships.</li>
+            </ul>
+        </section>
+
+        <section id="external-sources">
+            <h2>Use of External Data Sources</h2>
+            <p>MiRT integrates external data from:</p>
+            <ul>
+                <li><strong>Wikidata & DBpedia:</strong> For enriching migration events with contextual knowledge.</li>
+                <li><strong>Mockaroo:</strong> For generating synthetic data during testing phases.</li>
+                <li><strong>free-for.dev APIs:</strong> To incorporate additional geospatial and environmental data.</li>
+            </ul>
+            <p>Example SPARQL Query:</p>
+            <pre><code>SELECT ?species ?location WHERE {
+  ?event rdf:type :MigrationEvent .
+  ?event :species ?species ;
+         :location ?location .
+  FILTER(?species = "Bird")
+}</code></pre>
+        </section>
+
+        <section id="linked-data">
+            <h2>Linked Data Conformance</h2>
+            <p>MiRT adheres to Linked Data principles by:</p>
+            <ul>
+                <li>Using URIs to identify resources uniquely.</li>
+                <li>Providing dereferenceable HTTP links for accessing data.</li>
+                <li>Linking to external datasets for enriched semantic context.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MiRT Development Team. All rights reserved.</p>
+    </footer>
+</body>
+</html>
