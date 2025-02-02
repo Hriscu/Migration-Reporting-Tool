@@ -122,8 +122,8 @@ The project is being developed in multiple phases:
   - **Handled by:** Iațu Antonio
 
 9. **Machine Learning with LDA for Topic Modeling**  
-   - **Completed on:** 30/01/2025  
-   - **Handled by:** Hriscu Alexandru-Gabriel
+  - **Completed on:** 30/01/2025  
+  - **Handled by:** Hriscu Alexandru-Gabriel
 
 10. **Test MongoDB - Heroku**
   - **Completed on:** 30/01/2025  
