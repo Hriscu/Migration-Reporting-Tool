@@ -39,15 +39,15 @@ def get_posts_from_fuseki():
     posts = []
     for result in results["results"]["bindings"]:
         posts.append({
-            "uri": result["post"]["value"],
-            "id": result["id"]["value"],
-            "title": result["title"]["value"],
-            "text": result["text"]["value"],
-            "url": result["url"]["value"],
-            "subreddit": result["subreddit"]["value"],
-            "score": result["score"]["value"],
-            "num_comments": result["num_comments"]["value"],
-            "created_at": result["created_at"]["value"]
+            'uri': result['post']['value'],
+            'id': result['id']['value'],
+            'title': result['title']['value'],
+            'text': result['text']['value'],
+            'url': result['url']['value'],
+            'subreddit': result['subreddit']['value'],
+            'score': result['score']['value'],
+            'num_comments': result['num_comments']['value'],
+            'created_at': result['created_at']['value']
         })
 
     return posts
@@ -86,15 +86,15 @@ def get_comments_from_fuseki():
     comments = []
     for result in results["results"]["bindings"]:
         comments.append({
-            "uri": result["comment"]["value"],
-            "id": result["id"]["value"],
-            "text": result["text"]["value"],
-            "score": result["score"]["value"],
-            "created_at": result["created_at"]["value"],
-            "post_id": result["post_id"]["value"],
-            "location": result["location"]["value"],
-            "lat": result["lat"]["value"] if "lat" in result else None,
-            "long": result["long"]["value"] if "long" in result else None
+            'uri': result['comment']['value'],
+            'id': result['id']['value'],
+            'text': result['text']['value'],
+            'score': result['score']['value'],
+            'created_at': result['created_at']['value'],
+            'post_id': result['post_id']['value'],
+            'location': result['location']['value'],
+            'lat': result['lat']['value'] if 'lat' in result else None,
+            'long': result['long']['value'] if 'long' in result else None
         })
     
     return comments
@@ -133,15 +133,15 @@ def get_birds_from_fuseki():
     birds = []
     for result in results["results"]["bindings"]:
         birds.append({
-            "uri": result["bird"]["value"],
-            "label": result["label"]["value"],
-            "description": result["description"]["value"],
-            "family": result["family"]["value"],
-            "genus": result["genus"]["value"],
-            "scientific_name": result["scientific_name"]["value"],
-            "species": result["species"]["value"],
-            "thumbnail": result["thumbnail"]["value"],
-            "url": result["url"]["value"]
+            'uri': result['bird']['value'],
+            'label': result['label']['value'],
+            'description': result['description']['value'],
+            'family': result['family']['value'],
+            'genus': result['genus']['value'],
+            'scientific_name': result['scientific_name']['value'],
+            'species': result['species']['value'],
+            'thumbnail': result['thumbnail']['value'],
+            'url': result['url']['value']
         })
 
     return birds
@@ -176,11 +176,11 @@ def get_locations_from_fuseki():
     locations = []
     for result in results["results"]["bindings"]:
         locations.append({
-            "uri": result["location"]["value"],
-            "label": result["label"]["value"],
-            "description": result["description"]["value"],
-            "lat": result["lat"]["value"] if "lat" in result else None,
-            "long": result["long"]["value"] if "long" in result else None
+            'uri': result['location']['value'],
+            'label': result['label']['value'],
+            'description': result['description']['value'],
+            'lat': result['lat']['value'] if 'lat' in result else None,
+            'long': result['long']['value'] if 'long' in result else None
         })
 
     return locations
