@@ -1,0 +1,60 @@
+/* Stilurile pentru întregul document */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  /* Stilurile pentru antet */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  /* Stilurile pentru secțiuni */
+  section {
+    margin: 20px 0;
+  }
+  
+  section h2 {
+    font-size: 24px;
+    margin: 0 0 10px;
+  }
+  
+  section ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  section li {
+    margin-bottom: 5px;
+  }
+  
+  section li strong {
+    display: inline-block;
+    width: 120px;
+  }
+  
+  /* Stilurile pentru imaginea de înfundat */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Stilurile pentru link-uri */
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
