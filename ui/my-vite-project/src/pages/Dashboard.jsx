@@ -127,24 +127,6 @@ const Dashboard = () => {
         //     { coords: [28.6139, 77.2090], description: "UFO activity in Delhi." },
         // ];
 
-        // const birdLayer = L.layerGroup(
-        //     birdMigrations.map(event =>
-        //         L.marker(event.coords, { icon: createCustomIcon('bird', markerType) }).bindPopup(event.description)
-        //     )
-        // );
-
-        // const extraterrestrialLayer = L.layerGroup(
-        //     extraterrestrialMigrations.map(event =>
-        //         L.marker(event.coords, { icon: createCustomIcon('extraterrestrial', markerType) }).bindPopup(event.description)
-        //     )
-        // );
-
-        // const humanLayer = L.layerGroup(
-        //     humanMigrations.map(event =>
-        //         L.marker(event.coords, { icon: createCustomIcon('humans', markerType) }).bindPopup(event.description)
-        //     )
-        // );
-
         const birdLayer = L.layerGroup(
             birdMigrations.map(event =>
                 L.marker(event.coords, { icon: createCustomIcon("bird", markerType) }).bindPopup(event.description)
