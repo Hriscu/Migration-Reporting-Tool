@@ -70,13 +70,17 @@ def get_reddit_posts(request):
         for item in data:
             formatted_data.append({
                 'id': item.get('_id', 'N/A'),
-                "title": item.get("title", "N/A"),
-                "text": item.get("text", "N/A"),
-                "subreddit": item.get("subreddit", "N/A"),
-                "score": item.get("score", "N/A"),
-                "url": item.get("url", "N/A"),
-                "num_comments": item.get("num_comments", "N/A"),
-                "created_at": item.get("created_at", "N/A"),
+                'title': item.get('title', 'N/A'),
+                'text': item.get('text', 'N/A'),
+                'keywords': item.get('keywords', []) if isinstance(item.get('keywords'), list) else [item.get('keywords', 'N/A')],
+                'subreddit': item.get('subreddit', 'N/A'),
+                'score': item.get('score', 'N/A'),
+                'url': item.get('url', 'N/A'),
+                'num_comments': item.get('num_comments', 'N/A'),
+                'created_at': item.get('created_at', 'N/A'),
+                'location': item.get('location', 'N/A'),
+                'latitude': item.get('latitude', 'N/A'),
+                'longitude': item.get('longitude', 'N/A'),
             })
         return formatted_data
     except Exception as e:
@@ -85,13 +89,13 @@ def get_reddit_posts(request):
 
 def clean_value(value):
     if value is None or value.strip() == "":
-        return "Unknown"
+        return 'Unknown'
     return value.replace('"', "'")
 
 
 def escape_special_characters(value):
-    if value is None:
-        return "Unknown"
+    if value is None or value.strip() == "":
+        return 'Unknown'
     value = value.replace("\\", "\\\\")
     value = value.replace('"', '\\"')
     value = value.replace("'", "\\'")
@@ -117,15 +121,19 @@ def map_posts_to_ontology(data):
         cleaned_text = escape_special_characters(clean_value(post['text']))
         cleaned_subreddit = escape_special_characters(clean_value(post['subreddit']))
         cleaned_score = post['score']
+        cleaned_keywords = escape_special_characters(', '.join(post['keywords'])) if isinstance(post['keywords'], list) else escape_special_characters(post['keywords'])
         cleaned_url = escape_special_characters(clean_value(post['url']))
         cleaned_num_comments = post['num_comments']
         cleaned_created_at = format_datetime(post['created_at'])
+        cleaned_location = escape_special_characters(post['location'])
+        cleaned_latitude = post['latitude']
+        cleaned_longitude = post['longitude']
 
         insert_query = f"""
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX mirt: <{base_uri}>
-            PREFIX dct: <http://purl.org/dc/terms/>
+            PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 
             INSERT DATA {{
                 <{cleaned_url}> rdf:type mirt:Post ;
@@ -136,6 +144,9 @@ def map_posts_to_ontology(data):
                     mirt:hasScore "{cleaned_score}" ;
                     mirt:hasUrl "{cleaned_url}" ;
                     mirt:hasNumComments "{cleaned_num_comments}" ;
+                    mirt:hasLocation "{cleaned_location}" ;
+                    geo:lat "{cleaned_latitude}" ;
+                    geo:long "{cleaned_longitude}" ;
                     mirt:hasCreatedAt "{cleaned_created_at}" .
             }}
         """

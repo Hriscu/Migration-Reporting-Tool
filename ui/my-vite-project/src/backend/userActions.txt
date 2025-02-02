@@ -95,3 +95,38 @@
 {"timestamp":"2025-02-01T15:37:30.861Z","action":"User clicked on BUTTON at position (316, 204)","page":"http://localhost:5173/dashboard"}
 {"timestamp":"2025-02-01T15:37:32.812Z","action":"User clicked on BUTTON at position (1180, 373)","page":"http://localhost:5173/ExtraterrestrialMigrationsSubtopics"}
 {"timestamp":"2025-02-01T15:37:32.818Z","action":"User accessed page http://localhost:5173/ExtraterrestrialMigrationsSubtopics","page":"http://localhost:5173/ExtraterrestrialMigrationsSubtopics"}
+{"timestamp":"2025-02-02T08:06:42.857Z","action":"User accessed page http://localhost:5173/","page":"http://localhost:5173/"}
+{"timestamp":"2025-02-02T08:06:54.546Z","action":"User clicked on DIV at position (1913, 728)","page":"http://localhost:5173/"}
+{"timestamp":"2025-02-02T08:07:07.341Z","action":"User clicked on NAV at position (1641, 59)","page":"http://localhost:5173/"}
+{"timestamp":"2025-02-02T08:07:07.676Z","action":"User clicked on A at position (1660, 48)","page":"http://localhost:5173/about"}
+{"timestamp":"2025-02-02T08:07:07.689Z","action":"User accessed page http://localhost:5173/about","page":"http://localhost:5173/about"}
+{"timestamp":"2025-02-02T08:07:09.586Z","action":"User clicked on A at position (1726, 40)","page":"http://localhost:5173/contact"}
+{"timestamp":"2025-02-02T08:07:09.590Z","action":"User accessed page http://localhost:5173/contact","page":"http://localhost:5173/contact"}
+{"timestamp":"2025-02-02T08:07:11.606Z","action":"User clicked on A at position (1578, 42)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:07:11.610Z","action":"User accessed page http://localhost:5173/dashboard","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:10:13.340Z","action":"User clicked on IMG at position (1270, 390)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:10:14.678Z","action":"User clicked on IMG at position (1155, 414)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:10:16.394Z","action":"User clicked on IMG at position (1270, 382)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:05.398Z","action":"User clicked on DIV at position (1013, 631)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:23.173Z","action":"User clicked on DIV at position (1102, 527)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:31.307Z","action":"User clicked on DIV at position (1228, 639)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:41.117Z","action":"User clicked on DIV at position (1195, 638)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:44.165Z","action":"User clicked on DIV at position (1024, 804)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:48.899Z","action":"User clicked on DIV at position (1061, 483)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:16:55.984Z","action":"User clicked on DIV at position (962, 730)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:06.188Z","action":"User clicked on DIV at position (1094, 473)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:15.525Z","action":"User clicked on DIV at position (1259, 623)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:27.269Z","action":"User clicked on DIV at position (1099, 651)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:37.896Z","action":"User clicked on DIV at position (1078, 641)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:42.732Z","action":"User clicked on DIV at position (1034, 696)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:44.689Z","action":"User clicked on DIV at position (1188, 524)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:46.769Z","action":"User clicked on DIV at position (1184, 527)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:59.976Z","action":"User clicked on SPAN at position (1469, 235)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:17:59.979Z","action":"User clicked on INPUT at position (1469, 235)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:00.582Z","action":"User clicked on SPAN at position (1478, 262)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:00.585Z","action":"User clicked on INPUT at position (1478, 262)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:01.313Z","action":"User clicked on SPAN at position (1478, 260)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:01.316Z","action":"User clicked on INPUT at position (1478, 260)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:01.757Z","action":"User clicked on SPAN at position (1475, 249)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:01.759Z","action":"User clicked on INPUT at position (1475, 249)","page":"http://localhost:5173/dashboard"}
+{"timestamp":"2025-02-02T08:18:02.396Z","action":"User clicked on DIV at position (1763, 341)","page":"http://localhost:5173/dashboard"}
