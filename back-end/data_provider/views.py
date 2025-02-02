@@ -2,6 +2,7 @@ from django.shortcuts import render
 from SPARQLWrapper import SPARQLWrapper, JSON
 from django.http import JsonResponse
 from fuzzywuzzy import fuzz
+from django.views.decorators.cache import cache_page
 from django.http import HttpResponse
 
 BASE_URI = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
@@ -218,7 +219,7 @@ def get_relations_for_comments(request):
 
     return comments, relations_locations, relations_birds
 
-
+@cache_page(60 * 45)
 def make_object_for_front(request):
     posts, posts_relations_locations, posts_relations_birds = get_relations_for_posts(request)
     comments, comments_relations_locations, comments_relations_birds = get_relations_for_comments(request)
