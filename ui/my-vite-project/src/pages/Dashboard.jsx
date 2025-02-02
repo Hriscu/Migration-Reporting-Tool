@@ -22,6 +22,49 @@ const Dashboard = () => {
     const [markerType, setMarkerType] = useState('black');
     const navigate = useNavigate();
 
+    const [birdMigrations, setBirdMigrations] = useState([]);
+    const [extraterrestrialMigrations, setExtraterrestrialMigrations] = useState([]);
+    const [humanMigrations, setHumanMigrations] = useState([]);
+
+    useEffect(() => {
+        
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://my-mirt-app-960e0d1118e4.herokuapp.com/data/make-object-for-front/");
+                const data = await response.json();
+
+                const birds = [];
+                const aliens = [];
+                const humans = [];
+
+                data.forEach(item => {
+                    if (item.latitude && item.longitude) {
+                        const migrationData = {
+                            coords: [parseFloat(item.latitude), parseFloat(item.longitude)],
+                            description: item.title || `Post from ${item.subreddit}`,
+                        };
+
+                        if (item.subreddit === "birding") {
+                            birds.push(migrationData);
+                        } else if (item.subreddit === "aliens") {
+                            aliens.push(migrationData);
+                        } else if (item.subreddit === "IWantOut") {
+                            humans.push(migrationData);
+                        }
+                    }
+                });
+
+                setBirdMigrations(birds);
+                setExtraterrestrialMigrations(aliens);
+                setHumanMigrations(humans);
+            } catch (error) {
+                console.error("Eroare la preluarea datelor:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     useEffect(() => {
         const map = L.map('map').setView([20, 0], 2);
 
@@ -67,38 +110,57 @@ const Dashboard = () => {
             });
         };
 
-        const birdMigrations = [
-            { coords: [51.5074, -0.1278], description: "Bird migration in London." },
-            { coords: [55.7558, 37.6173], description: "Bird migration in Moscow." },
-        ];
+        // const birdMigrations = [
+        //     { coords: [51.5074, -0.1278], description: "Bird migration in London." },
+        //     { coords: [55.7558, 37.6173], description: "Bird migration in Moscow." },
+        // ];
 
-        const humanMigrations = [
-            { coords: [40.7128, -74.0060], description: "Seasonal migration in New York." },
-            { coords: [34.0522, -118.2437], description: "Human migration in Los Angeles." },
-        ];
+        // const humanMigrations = [
+        //     { coords: [40.7128, -74.0060], description: "Seasonal migration in New York." },
+        //     { coords: [34.0522, -118.2437], description: "Human migration in Los Angeles." },
+        // ];
 
-        const extraterrestrialMigrations = [
-            { coords: [19.4326, -99.1332], description: "UFO spotted in Mexico City." },
-            { coords: [28.6139, 77.2090], description: "UFO activity in Delhi." },
-        ];
+        // const extraterrestrialMigrations = [
+        //     { coords: [19.4326, -99.1332], description: "UFO spotted in Mexico City." },
+        //     { coords: [28.6139, 77.2090], description: "UFO activity in Delhi." },
+        // ];
+
+        // const birdLayer = L.layerGroup(
+        //     birdMigrations.map(event =>
+        //         L.marker(event.coords, { icon: createCustomIcon('bird', markerType) }).bindPopup(event.description)
+        //     )
+        // );
+
+        // const extraterrestrialLayer = L.layerGroup(
+        //     extraterrestrialMigrations.map(event =>
+        //         L.marker(event.coords, { icon: createCustomIcon('extraterrestrial', markerType) }).bindPopup(event.description)
+        //     )
+        // );
+
+        // const humanLayer = L.layerGroup(
+        //     humanMigrations.map(event =>
+        //         L.marker(event.coords, { icon: createCustomIcon('humans', markerType) }).bindPopup(event.description)
+        //     )
+        // );
 
         const birdLayer = L.layerGroup(
             birdMigrations.map(event =>
-                L.marker(event.coords, { icon: createCustomIcon('bird', markerType) }).bindPopup(event.description)
+                L.marker(event.coords, { icon: createCustomIcon("bird", markerType) }).bindPopup(event.description)
             )
         );
 
         const extraterrestrialLayer = L.layerGroup(
             extraterrestrialMigrations.map(event =>
-                L.marker(event.coords, { icon: createCustomIcon('extraterrestrial', markerType) }).bindPopup(event.description)
+                L.marker(event.coords, { icon: createCustomIcon("extraterrestrial", markerType) }).bindPopup(event.description)
             )
         );
 
         const humanLayer = L.layerGroup(
             humanMigrations.map(event =>
-                L.marker(event.coords, { icon: createCustomIcon('humans', markerType) }).bindPopup(event.description)
+                L.marker(event.coords, { icon: createCustomIcon("humans", markerType) }).bindPopup(event.description)
             )
         );
+
         birdLayer.addTo(map);
         humanLayer.addTo(map);
         extraterrestrialLayer.addTo(map);
@@ -127,25 +189,48 @@ const Dashboard = () => {
                 });
             }
         }
+        // const updateMarkers = () => {
+        //     birdLayer.clearLayers();
+        //     birdMigrations.forEach(event =>
+        //         birdLayer.addLayer(
+        //             L.marker(event.coords, { icon: createCustomIcon('bird', markerType) }).bindPopup(event.description)
+        //         )
+        //     );
+
+        //     humanLayer.clearLayers();
+        //     humanMigrations.forEach(event =>
+        //         humanLayer.addLayer(
+        //             L.marker(event.coords, { icon: createCustomIcon('humans', markerType) }).bindPopup(event.description)
+        //         )
+        //     );
+
+        //     extraterrestrialLayer.clearLayers();
+        //     extraterrestrialMigrations.forEach(event =>
+        //         extraterrestrialLayer.addLayer(
+        //             L.marker(event.coords, { icon: createCustomIcon('extraterrestrial', markerType) }).bindPopup(event.description)
+        //         )
+        //     );
+        // };
+
         const updateMarkers = () => {
             birdLayer.clearLayers();
             birdMigrations.forEach(event =>
                 birdLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon('bird', markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("bird", markerType) }).bindPopup(event.description)
                 )
             );
 
             humanLayer.clearLayers();
             humanMigrations.forEach(event =>
                 humanLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon('humans', markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("humans", markerType) }).bindPopup(event.description)
                 )
             );
 
             extraterrestrialLayer.clearLayers();
             extraterrestrialMigrations.forEach(event =>
                 extraterrestrialLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon('extraterrestrial', markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("extraterrestrial", markerType) }).bindPopup(event.description)
                 )
             );
         };
@@ -155,7 +240,7 @@ const Dashboard = () => {
         return () => {
             map.remove();
         };
-    }, [markerType]);
+    }, [markerType, birdMigrations, extraterrestrialMigrations, humanMigrations]);
 
     const exportMap = (format) => {
         const mapElement = document.getElementById('map');
