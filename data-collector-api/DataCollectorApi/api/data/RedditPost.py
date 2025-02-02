@@ -24,7 +24,6 @@ class RedditPost:
 
     @classmethod
     def from_dict(cls, data):
-        """Create a RedditPost instance from a MongoDB document."""
         return cls(
             post_id=data.get("post_id"),
             title=data.get("title"),

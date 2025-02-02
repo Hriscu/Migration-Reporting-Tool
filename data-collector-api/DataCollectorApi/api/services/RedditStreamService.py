@@ -13,7 +13,6 @@ from api.data.RedditCommentsRepository import RedditCommentsRepository
 from api.data.RedditPostsRepository import RedditPostsRepository
 from api.data.DataPreprocessor import DataPreprocessor
 
-# Set Django configuration
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DataCollectorApi.settings')
 django.setup()
 

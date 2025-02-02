@@ -1,4 +1,3 @@
-# RedditCommentsRepository.py
 from api.data import RedditComment
 from api.data.MongoDbClient import MongoDbClient
 

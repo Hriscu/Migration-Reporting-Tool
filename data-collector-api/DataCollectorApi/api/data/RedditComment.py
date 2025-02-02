@@ -33,7 +33,6 @@ class RedditComment:
 
     @classmethod
     def from_dict(cls, data):
-        """Create a RedditComment instance from a MongoDB document."""
         return cls(
             comment_id=data.get("comment_id"),
             post_id=data.get("post_id"),
