@@ -47,7 +47,7 @@ const UserMonitor = () => {
 
   const saveLog = async (logEntry) => {
     try {
-      const response = await fetch('http://localhost:5000/log', {
+      const response = await fetch('http://35.228.54.3:5000/log', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
