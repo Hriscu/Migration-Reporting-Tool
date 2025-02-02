@@ -36,6 +36,7 @@ const Dashboard = () => {
                 const birds = [];
                 const aliens = [];
                 const humans = [];
+                // console.log()
 
                 data.forEach(item => {
                     if (item.latitude && item.longitude) {
@@ -45,6 +46,7 @@ const Dashboard = () => {
                         };
 
                         if (item.subreddit === "birding") {
+                            // console.log(item.subreddit)
                             birds.push(migrationData);
                         } else if (item.subreddit === "aliens") {
                             aliens.push(migrationData);
