@@ -30,26 +30,87 @@
             <p>The Migration Reporting Tool (MiRT) is an intelligent web system designed to visualize migration events of various entities (birds, humans, robots, extraterrestrial beings) in real-time using interactive maps. This report outlines the technical architecture, internal data models, API specifications, and the integration of external knowledge sources.</p>
         </section>
 
-        <section id="data-structures">
-            <h2>Internal Data Structures</h2>
-            <p>MiRT manages multiple data structures to handle migration events, user interactions, and metadata. The core models include:</p>
-            <ul>
-                <li><strong>MigrationEvent:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
-                <li><strong>UserPreferences:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
-                <li><strong>StatisticalData:</strong> Aggregates data for generating migration statistics and trends.</li>
-            </ul>
-        </section>
+		<section id="data-structures">
+			<h2>Internal Data Structures</h2>
+			<p>MiRT manages multiple data structures to handle migration events, user interactions, and metadata. The core models include:</p>
+			<ul>
+				<li><strong>Example1:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
+				<li><strong>Example2:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
+				<li><strong>TopicModeling:</strong> Aggregates data for generating statistics regarding comments on a given migration topic.</li>
+			</ul>
 
-        <section id="api-architecture">
-            <h2>API Architecture</h2>
-            <p>MiRT employs RESTful APIs to manage data interactions:</p>
-            <ul>
-                <li><strong>GET /migrations:</strong> Retrieves migration events with optional filters for entity type, date range, and location.</li>
-                <li><strong>POST /report:</strong> Allows users to report new migration events with metadata.</li>
-                <li><strong>GET /statistics:</strong> Provides statistical summaries using aggregated data.</li>
-                <li><strong>GraphQL Endpoint:</strong> Offers flexible querying capabilities for advanced data analytics.</li>
-            </ul>
-        </section>
+			<!-- Topic Modeling Details -->
+			<h3>Topic Modeling Details</h3>
+			<p>The <strong>TopicModeling</strong> module is responsible for analyzing comments related to migration events. It uses Latent Dirichlet Allocation (LDA) to identify hidden topics and generate statistical insights.</p>
+
+			<h4>Environment Setup</h4>
+			<p>Install the necessary Python packages:</p>
+			<pre><code>pip install pandas pyLDAvis gensim nltk spacy wordsegment contractions requests python-dotenv</code></pre>
+
+			<p>Download required NLTK resources:</p>
+			<pre><code>import nltk
+		nltk.download('punkt')
+		nltk.download('stopwords')
+		nltk.download('wordnet')</code></pre>
+
+			<p>For API integration, create a <code>.env</code> file inside the <code>TopicModeling</code> directory and add your API key from 
+			<a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>:</p>
+			<pre><code>API_KEY=your_api_key_here</code></pre>
+
+			<h4>Code Structure</h4>
+			<ul>
+				<li><strong>main.py:</strong> Initializes and runs the LDA topic modeling pipeline.</li>
+				<li><strong>lda_model.py:</strong> Manages LDA model training and optimization.</li>
+				<li><strong>preprocessor.py:</strong> Handles text cleaning, tokenization, and stopword removal.</li>
+				<li><strong>get_topic_name.py:</strong> Uses the Google Gemini API to assign descriptive names to detected topics.</li>
+				<li><strong>lda_visualisation_numTopicsNR.html:</strong> Provides interactive visualizations of topic distributions.</li>
+				<li><strong>trainig_data_collector.py:</strong> Aggregates raw data from various sources into training datasets.</li>
+				<li><strong>SavedModels/:</strong> Stores trained LDA models for future analysis.</li>
+			</ul>
+
+			<h4>Workflow Overview</h4>
+			<ol>
+				<li>Preprocess comments using <code>preprocessor.py</code>.</li>
+				<li>Train the LDA model with <code>lda_model.py</code>.</li>
+				<li>Generate topic names via <code>get_topic_name.py</code>.</li>
+				<li>Visualize topic distributions with <code>lda_visualisation_numTopicsNR.html</code>.</li>
+			</ol>
+
+			<p>This structure helps MiRT provide deeper insights into migration-related discussions through automated topic discovery and analysis.</p>
+		</section>
+
+
+		<section id="api-architecture">
+			<h2>API Architecture</h2>
+			<p>MiRT employs RESTful APIs to manage data interactions for comments and posts, allowing for CRUD operations on both entities.</p>
+
+			<!-- Comments API Section -->
+			<h3>Comments API</h3>
+			<ul>
+				<li><strong>GET /comments/</strong> - Retrieves a list of all comments. (Endpoint: <code>comments_list</code>)</li>
+				<li><strong>POST /comments/</strong> - Creates a new comment. (Endpoint: <code>comments_create</code>)</li>
+				<li><strong>GET /comments/{_id}/</strong> - Retrieves a specific comment by ID. (Endpoint: <code>comments_read</code>)</li>
+				<li><strong>PUT /comments/{_id}/</strong> - Updates an existing comment entirely. (Endpoint: <code>comments_update</code>)</li>
+				<li><strong>PATCH /comments/{_id}/</strong> - Partially updates specific fields of a comment. (Endpoint: <code>comments_partial_update</code>)</li>
+				<li><strong>DELETE /comments/{_id}/</strong> - Deletes a comment by ID. (Endpoint: <code>comments_delete</code>)</li>
+				<li><strong>GET /comments/{post_id}/</strong> - Retrieves comments related to a specific post. (Endpoint: <code>comments_read</code>)</li>
+				<li><strong>POST /comments/{post_id}/</strong> - Creates a comment for a specific post. (Endpoint: <code>comments_create</code>)</li>
+			</ul>
+
+			<!-- Posts API Section -->
+			<h3>Posts API</h3>
+			<ul>
+				<li><strong>GET /posts/</strong> - Retrieves a list of all posts. (Endpoint: <code>posts_list</code>)</li>
+				<li><strong>POST /posts/</strong> - Creates a new post. (Endpoint: <code>posts_create</code>)</li>
+				<li><strong>GET /posts/{_id}/</strong> - Retrieves a specific post by ID. (Endpoint: <code>posts_read</code>)</li>
+				<li><strong>PUT /posts/{_id}/</strong> - Updates an existing post entirely. (Endpoint: <code>posts_update</code>)</li>
+				<li><strong>PATCH /posts/{_id}/</strong> - Partially updates specific fields of a post. (Endpoint: <code>posts_partial_update</code>)</li>
+				<li><strong>DELETE /posts/{_id}/</strong> - Deletes a post by ID. (Endpoint: <code>posts_delete</code>)</li>
+			</ul>
+
+			<p>All API endpoints return data in JSON format. For operations that modify resources (POST, PUT, PATCH), ensure the request body follows the expected schema, including required fields such as <code>title</code>, <code>content</code>, or <code>text</code> where applicable.</p>
+		</section>
+
 
         <section id="rdf-models">
             <h2>RDF-Based Knowledge Models</h2>
