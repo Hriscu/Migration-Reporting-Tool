@@ -26,6 +26,7 @@
   height: 70%;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 #map {
@@ -37,7 +38,7 @@
 
 /* Toggle Panel Button */
 .toggle-panel-btn {
-  z-index: 1002;
+  /* z-index: 1002;
   background: #007bff;
   color: white;
   padding: 10px 15px;
@@ -48,7 +49,19 @@
   transition: background 0.3s ease-in-out;
   position: absolute; 
   top: 23%; 
-  left: 21%; 
+  left: 21%;  */
+  position: absolute;
+    top: 20px;
+    left: 50px;
+    z-index: 1002;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
 }
 
 

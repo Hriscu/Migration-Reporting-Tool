@@ -62,10 +62,12 @@ const HumanMigrationsStats = () => {
   
 
   return (
-    <div className="humanMigrationsStats-container">
-      <UserMonitor />
-      <h1>The statistics resulting from comments related to Human Migrations</h1>
-      <div id="ldavis_el1438019691434046249333962170" style={{ backgroundColor: 'white' }}></div>
+    <div vocab='https://schema.org/' typeof='Dataset'>
+      <div className="humanMigrationsStats-container">
+        <UserMonitor />
+        <h1>The statistics resulting from comments related to Human Migrations</h1>
+        <div id="ldavis_el1438019691434046249333962170" style={{ backgroundColor: 'white' }}></div>
+      </div>
     </div>
   );
 };

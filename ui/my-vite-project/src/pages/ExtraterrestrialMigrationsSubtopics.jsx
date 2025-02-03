@@ -46,17 +46,19 @@ const formatKeywords = (keywords) => {
 
 const ExtraterrestrialMigrationsSubtopics = () => {
   return (
-    <div className="extraterrestrialMigrationsSubtopics-container">
-      <UserMonitor />
-      <h1>Subtopics highlighted in the comments related to Extraterrestrial Migrations</h1>
-      <ul className="subtopics-list">
-        {subtopics.map((subtopic, index) => (
-          <li key={index} className="subtopic-item">
-            <h2>{index + 1}. {subtopic.title}</h2>
-            <p className="keywords">Keywords: {formatKeywords(subtopic.keywords)}</p>
-          </li>
-        ))}
-      </ul>
+    <div vocab='https://schema.org/' typeof='CollectionPage'>
+      <div className="extraterrestrialMigrationsSubtopics-container">
+        <UserMonitor />
+        <h1 property='name'>Subtopics highlighted in the comments related to Extraterrestrial Migrations</h1>
+        <ul className="subtopics-list">
+          {subtopics.map((subtopic, index) => (
+            <li key={index} className="subtopic-item">
+              <h2>{index + 1}. {subtopic.title}</h2>
+              <p className="keywords">Keywords: {formatKeywords(subtopic.keywords)}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

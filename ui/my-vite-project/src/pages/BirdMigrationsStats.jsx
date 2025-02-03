@@ -62,10 +62,12 @@ const BirdMigrationsStats = () => {
   
 
   return (
-    <div className="birdMigrationsStats-container">
-      <UserMonitor />
-      <h1>The statistics resulting from comments related to Bird Migrations</h1>
-      <div id="ldavis_el186019047242204323780429498" style={{ backgroundColor: 'white' }}></div>
+    <div vocab='https://schema.org/' typeof='Dataset'>
+      <div className="birdMigrationsStats-container">
+        <UserMonitor />
+        <h1 property='name'>The statistics resulting from comments related to Bird Migrations</h1>
+        <div id="ldavis_el186019047242204323780429498" style={{ backgroundColor: 'white' }}></div>
+      </div>
     </div>
   );
 };
