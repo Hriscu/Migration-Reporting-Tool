@@ -161,9 +161,46 @@ The project is being developed in multiple phases:
   - **Completed on:** 02/02/2025  
   - **Handled by:** Iațu Antonio
 
-19. **Preparing deliverables**
-  - **Completed on:** 02/02/2025  
+
+19. **Preparing Software Diagrams**
+  - **Completed on:** 02/02/2025
   - **Handled by:** Hriscu Alexandru-Gabriel
+
+20. Preparing Personas
+  - **Completed on:** 02/02/2025
+  - **Handled by:** Hriscu Alexandru-Gabriel
+
+21. Preparing User Guide
+  - **Completed on:** 02-03/02/2025
+  - **Handled by:** Hriscu Alexandru-Gabriel & Iațu Antonio
+
+22. Preparing Technical Report
+  - **Completed on:** 02-03/02/2025
+  - **Handled by:** Hriscu Alexandru-Gabriel & Iațu Antonio
+
+23. Making OpenAPI specification for the REST API (Swagger)
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Hriscu Alexandru-Gabriel
+
+24. Test UserMonitor cloud
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
+
+25. Making schema.org and RDFa
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
+
+26. Fix UI
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
+
+27. Preparing Wiki
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Hriscu Alexandru-Gabriel
+
+28. Making Video demonstration
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
 
 ### Tech Stack
 
