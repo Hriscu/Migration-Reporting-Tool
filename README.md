@@ -67,7 +67,7 @@
 
 <p> Each team could be awarded with an amount of maximum 3 points for: </p>
 
-* ⌛ adopting SHACL to validate RDF data,
+* ✔️ adopting SHACL to validate RDF data, (birds and locations)
 
 * ⌛ proposing a decentralized approach based on the Solid – an open standard for structuring data, digital identities, and applications on the Web,
 
@@ -201,6 +201,10 @@ The project is being developed in multiple phases:
 28. Making Video demonstration
   - **Completed on:** 03/02/2025
   - **Handled by:** Iațu Antonio
+  
+29. Adopting SHACL to validate RDF data (birds and locations)
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
 
 ### Tech Stack
 
@@ -209,10 +213,13 @@ The project is being developed in multiple phases:
    
 2. Server
   - [Django](https://www.djangoproject.com/)
+  - [Fuseki](https://jena.apache.org/documentation/fuseki2/)
+  - [Google Cloud VM Instances](https://cloud.google.com/compute/docs/instances)
 
 3. Database
   - [MongoDB](https://www.mongodb.com/products/platform/atlas-database)
 4. DevOps
+  - Cloud deployment - [Heroku](https://devcenter.heroku.com/) 
 
 ###  Color Reference
 
