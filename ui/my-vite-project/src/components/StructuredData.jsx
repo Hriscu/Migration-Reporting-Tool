@@ -37,7 +37,7 @@ const StructuredData = () => {
             "url": "http://35.228.54.3:5173/",
             "description": "Our website presents information about the migration of birds, humans and aliens.",
             "author": {
-                "@type": "Person",
+                "@type": "Organization",
                 "name": "Grey Heron"
             }
         });
