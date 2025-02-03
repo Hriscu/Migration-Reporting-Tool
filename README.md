@@ -220,6 +220,8 @@ Project Link: [https://github.com/Hriscu/Migration-Reporting-Tool](https://githu
 
 This section is to mention useful resources and libraries that we have used in our project.
 
+ - [Swagger](https://swagger.io/)
+ - [drawio](https://app.diagrams.net/)
  - [geoPy](https://geopy.readthedocs.io/en/stable/)
  - [spaCy](https://spacy.io/)
  - [MongoDB Atlas](https://www.mongodb.com/docs/atlas/)
