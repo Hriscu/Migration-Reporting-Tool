@@ -36,12 +36,12 @@ class MyTestCase(unittest.TestCase):
         output_text = "This is an emoji"
         self.assertNotEqual(self.preprocessor.emoji_elimination(input_text), output_text)
 
-    def text_lowercase_equal(self):
+    def test_lowercase_equal(self):
         input_text = "This is a TEST"
         output_text = "this is a test"
         self.assertEqual(self.preprocessor.lowercase(input_text), output_text)
 
-    def text_lowercase_not_equal(self):
+    def test_lowercase_not_equal(self):
         input_text = "This is a TEST"
         output_text = "this is a TEST"
         self.assertNotEqual(self.preprocessor.lowercase(input_text), output_text)
