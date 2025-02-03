@@ -40,7 +40,7 @@
 
 <p> At the end of semester's week #17, a student team must deliver the following resources, according to each project proposal: </p>
 
-1. ⌛ A public wiki associated to the WADe project repository should record the solution's progress. The content must be available in English language and minimally tagged with project, infoiasi, wade, and web. All project's deliverables must be referred by this wiki. **This README contains: the record of the solution's progress (in the Progress section of this README), tags (in the Tags section of this README), all project's deliverables (more informations in this section of the README)**
+1. ✔️ A public wiki associated to the WADe project repository should record the solution's progress. The content must be available in English language and minimally tagged with project, infoiasi, wade, and web. All project's deliverables must be referred by this wiki. **Check Wiki here: [https://github.com/Hriscu/Migration-Reporting-Tool/wiki](https://github.com/Hriscu/Migration-Reporting-Tool/wiki)**
 
 2. ✔️ A general (service-oriented) architecture of the Web application + the overall design from the point of view of a software engineer (for example: main modules, software architecture diagrams, input/output data formats, data/task flows, etc.) and concerning the end users. **From an architectural perspective, the software architecture diagrams can be found at [https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Software%20architecture%20diagrams](https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Software%20architecture%20diagrams). From a design perspective, the design is responsive.**
 
