@@ -11,6 +11,7 @@ import ExtraterrestrialMigrationsStats from './pages/ExtraterrestrialMigrationsS
 import ExtraterrestrialMigrationsSubtopics from './pages/ExtraterrestrialMigrationsSubtopics';
 import HumanMigrationsStats from './pages/HumanMigrationsStats';
 import HumanMigrationsSubtopics from './pages/HumanMigrationsSubtopics';
+import StructuredData from './components/StructuredData';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <Router>
+      <StructuredData />
       <NewNavbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       
       <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>

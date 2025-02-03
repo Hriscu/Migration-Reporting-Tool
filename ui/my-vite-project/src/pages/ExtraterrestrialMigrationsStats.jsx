@@ -62,10 +62,12 @@ const ExtraterrestrialMigrationsStats = () => {
   
 
   return (
-    <div className="extraterrestrialMigrationsStats-container">
-      <UserMonitor />
-      <h1>The statistics resulting from comments related to Extraterrestrial Migrations</h1>
-      <div id="ldavis_el229215403994752645447448646" style={{ backgroundColor: 'white' }}></div>
+    <div vocab='https://schema.org/' typeof='Dataset'>
+      <div className="extraterrestrialMigrationsStats-container">
+        <UserMonitor />
+        <h1 property='name'>The statistics resulting from comments related to Extraterrestrial Migrations</h1>
+        <div id="ldavis_el229215403994752645447448646" style={{ backgroundColor: 'white' }}></div>
+      </div>
     </div>
   );
 };

@@ -275,7 +275,7 @@ const Dashboard = () => {
                            : format === 'jpg' ? canvas.toDataURL("image/jpeg", 0.9) 
                            : null;
     
-            if (format === 'pdf') {
+            if (format === 'pdf') {<img src="/src/assets/logo.png" alt="Logo"></img>
                 const pdf = new jsPDF({
                     orientation: 'landscape',
                     unit: 'mm',
@@ -293,59 +293,56 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="dashboard-container">
-            <UserMonitor />  
-            <h1 className="dashboard-title">Dashboard</h1>
+        <div vocab='https://schema.org/' typeof='WebPage'>
+            <meta property="description" content="This is a dashboard for monitoring bird, extraterrestrial, and human migration data."></meta>
+            <div className="dashboard-container">
+                <UserMonitor />  
+                <h1 property='name' className="dashboard-title">Dashboard</h1>
 
-            <div className="map-container">
-                <div id="map"></div>
-            </div>
-            {/* Control Panel Toggle Button */}
-            <button
-                className="toggle-panel-btn"
-                onClick={() => setIsPanelOpen(prev => !prev)} // Toggle panel state
-                style={{
-                    padding: '12px',
-                    background: isPanelOpen ? '#dc3545' : '#28a745', // Red when open and green when closed
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
-                    transition: 'background 0.3s ease',
-                }}
-            >
-                {isPanelOpen ? 'Close' : 'Panel'}
-            </button>
-            
-            {/* Control Panel */}
-            <div className={`control-panel ${isPanelOpen ? 'open' : ''}`}>
-                <h3>Control Panel</h3>
-                <h4>Marker types</h4>
-                <div className="marker-buttons">
-                    <button onClick={() => setMarkerType('black')} className={markerType === 'black' ? 'active' : ''}>Black</button>
-                    <button onClick={() => setMarkerType('white')} className={markerType === 'white' ? 'active' : ''}>White</button>
-                    <button onClick={() => setMarkerType('colored')} className={markerType === 'colored' ? 'active' : ''}>Colored</button>
+                <div className="map-container">
+                    <button
+                        className="toggle-panel-btn"
+                        onClick={() => setIsPanelOpen(prev => !prev)} // Toggle panel state
+                        style={{
+                            background: isPanelOpen ? '#dc3545' : '#28a745'
+                        }}
+                    >
+                        {isPanelOpen ? 'Close' : 'Panel'}
+                    </button>
+                    <div id="map"></div>
                 </div>
-                <h4>Save Map</h4>
-                <div className="save-buttons">
-                    <button onClick={() => exportMap('png')}>PNG</button>
-                    <button onClick={() => exportMap('jpg')}>JPG</button>
-                    <button onClick={() => exportMap('pdf')}>PDF</button>
-                </div>
-                <h4>Topic distribution</h4>
-                <div className="topic-buttons">
-                    <h5>Bird migrations</h5>
-                    <button onClick={() => navigate('/BirdMigrationsSubtopics')}>Subtopics</button>
-                    <button onClick={() => navigate('/BirdMigrationsStats')}>Stats</button>
-                    
-                    <h5>Extraterrestrial migrations</h5>
-                    <button onClick={() => navigate('/ExtraterrestrialMigrationsSubtopics')}>Subtopics</button>
-                    <button onClick={() => navigate('/ExtraterrestrialMigrationsStats')}>Stats</button>
+                {/* Control Panel Toggle Button */}
+                
+                
+                {/* Control Panel */}
+                <div className={`control-panel ${isPanelOpen ? 'open' : ''}`}>
+                    <h3>Control Panel</h3>
+                    <h4>Marker types</h4>
+                    <div className="marker-buttons">
+                        <button onClick={() => setMarkerType('black')} className={markerType === 'black' ? 'active' : ''}>Black</button>
+                        <button onClick={() => setMarkerType('white')} className={markerType === 'white' ? 'active' : ''}>White</button>
+                        <button onClick={() => setMarkerType('colored')} className={markerType === 'colored' ? 'active' : ''}>Colored</button>
+                    </div>
+                    <h4>Save Map</h4>
+                    <div className="save-buttons">
+                        <button onClick={() => exportMap('png')}>PNG</button>
+                        <button onClick={() => exportMap('jpg')}>JPG</button>
+                        <button onClick={() => exportMap('pdf')}>PDF</button>
+                    </div>
+                    <h4>Topic distribution</h4>
+                    <div className="topic-buttons">
+                        <h5>Bird migrations</h5>
+                        <button onClick={() => navigate('/BirdMigrationsSubtopics')}>Subtopics</button>
+                        <button onClick={() => navigate('/BirdMigrationsStats')}>Stats</button>
+                        
+                        <h5>Extraterrestrial migrations</h5>
+                        <button onClick={() => navigate('/ExtraterrestrialMigrationsSubtopics')}>Subtopics</button>
+                        <button onClick={() => navigate('/ExtraterrestrialMigrationsStats')}>Stats</button>
 
-                    <h5>Human migrations</h5>
-                    <button onClick={() => navigate('/HumanMigrationsSubtopics')}>Subtopics</button>
-                    <button onClick={() => navigate('/HumanMigrationsStats')}>Stats</button>
+                        <h5>Human migrations</h5>
+                        <button onClick={() => navigate('/HumanMigrationsSubtopics')}>Subtopics</button>
+                        <button onClick={() => navigate('/HumanMigrationsStats')}>Stats</button>
+                    </div>
                 </div>
             </div>
         </div>
