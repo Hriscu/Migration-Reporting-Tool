@@ -6,6 +6,7 @@ import os
 from SPARQLWrapper import SPARQLWrapper, JSON, XML
 from rdflib import Graph
 from datetime import datetime
+from pyshacl import validate
 
 
 MONGO_URI = 'mongodb+srv://MigrationReportingToolDb:gSuDEZ2eqM8x55wW@cluster0.c1zan.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -93,6 +94,31 @@ def clean_value(value):
     return value.replace('"', "'")
 
 
+
+def validate_rdf(data):
+    shacl_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'shapes.ttl')
+
+    # print("Validating RDF Data:\n", data)
+
+    g = Graph()
+    g.parse(data=data, format='turtle')
+
+    
+
+    g_shacl = Graph()
+    g_shacl.parse(shacl_file, format='turtle')
+
+    conforms, results_graph, results_text = validate(g, shacl_graph=shacl_file)
+
+    if conforms:
+        print("The data is valid according to the shape.")
+        return True
+    else:
+        print("The data is not valid according to the shape.")
+        return False
+
+
+
 def escape_special_characters(value):
     if value is None or value.strip() == "":
         return 'Unknown'
@@ -121,7 +147,7 @@ def map_posts_to_ontology(data):
         cleaned_text = escape_special_characters(clean_value(post['text']))
         cleaned_subreddit = escape_special_characters(clean_value(post['subreddit']))
         cleaned_score = post['score']
-        cleaned_keywords = escape_special_characters(', '.join(post['keywords'])) if isinstance(post['keywords'], list) else escape_special_characters(post['keywords'])
+        # cleaned_keywords = escape_special_characters(', '.join(post['keywords'])) if isinstance(post['keywords'], list) else escape_special_characters(post['keywords'])
         cleaned_url = escape_special_characters(clean_value(post['url']))
         cleaned_num_comments = post['num_comments']
         cleaned_created_at = format_datetime(post['created_at'])
@@ -155,6 +181,80 @@ def map_posts_to_ontology(data):
     return mapped_data
 
 
+
+
+
+def map_posts_to_ontology_v2(data):
+    mapped_data = []
+
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for post in data:
+        cleaned_id = post['id']
+        cleaned_title = escape_special_characters(clean_value(post['title']))
+        cleaned_text = escape_special_characters(clean_value(post['text']))
+        cleaned_subreddit = escape_special_characters(clean_value(post['subreddit']))
+        cleaned_score = post['score']
+        # cleaned_keywords = escape_special_characters(', '.join(post['keywords'])) if isinstance(post['keywords'], list) else escape_special_characters(post['keywords'])
+        cleaned_url = escape_special_characters(clean_value(post['url']))
+        cleaned_num_comments = post['num_comments']
+        cleaned_created_at = format_datetime(post['created_at'])
+        cleaned_location = escape_special_characters(post['location'])
+        cleaned_latitude = post['latitude']
+        cleaned_longitude = post['longitude']
+
+        rdf_data = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX mirt: <http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#>
+        PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+        <{cleaned_url}> rdf:type mirt:Post ;
+                    mirt:hasId "{cleaned_id}" ;
+                    mirt:hasTitle "{cleaned_title}" ;
+                    mirt:hasText "{cleaned_text}" ;
+                    mirt:hasSubreddit "{cleaned_subreddit}" ;
+                    mirt:hasScore {cleaned_score} ;
+                    mirt:hasUrl "{cleaned_url}" ;
+                    mirt:hasNumComments {cleaned_num_comments} ;
+                    mirt:hasLocation "{cleaned_location}" ;
+                    geo:lat "{cleaned_latitude}" ;
+                    geo:long "{cleaned_longitude}" ;
+                    mirt:hasCreatedAt "{cleaned_created_at}" .
+        """
+
+        rdf_data_fuseki = f"""
+        <{cleaned_url}> rdf:type mirt:Post ;
+                    mirt:hasId "{cleaned_id}" ;
+                    mirt:hasTitle "{cleaned_title}" ;
+                    mirt:hasText "{cleaned_text}" ;
+                    mirt:hasSubreddit "{cleaned_subreddit}" ;
+                    mirt:hasScore {cleaned_score} ;
+                    mirt:hasUrl "{cleaned_url}" ;
+                    mirt:hasNumComments {cleaned_num_comments} ;
+                    mirt:hasLocation "{cleaned_location}" ;
+                    geo:lat "{cleaned_latitude}" ;
+                    geo:long "{cleaned_longitude}" ;
+                    mirt:hasCreatedAt "{cleaned_created_at}" .
+
+        """
+
+        if validate_rdf(rdf_data):
+            insert_query = f"""
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX mirt: <{base_uri}>
+                PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+                INSERT DATA {{
+                    {rdf_data_fuseki}
+                }}
+            """
+            mapped_data.append(insert_query)
+
+    return mapped_data
+
+
 def insert_data_to_fuseki(queries):
     sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/posts-and-comments/update")
     sparql.setMethod("POST")
@@ -170,7 +270,7 @@ def insert_data_to_fuseki(queries):
 
 def get_and_insert_posts(request):
     reddit_posts = get_reddit_posts(request)
-    mapped_data = map_posts_to_ontology(reddit_posts)
+    mapped_data = map_posts_to_ontology_v2(reddit_posts)
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)
@@ -240,9 +340,70 @@ def map_comments_to_ontology(data):
     return mapped_data
 
 
+
+def map_comments_to_ontology_v2(data):
+    mapped_data = []
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for comment in data:
+        cleaned_id = comment['id']
+        cleaned_post_id = comment['post_id']
+        cleaned_text = escape_special_characters(clean_value(comment['text']))
+        cleaned_keywords = escape_special_characters(', '.join(comment['keywords'])) if isinstance(comment['keywords'], list) else escape_special_characters(comment['keywords'])
+        cleaned_location = escape_special_characters(comment['location'])
+        cleaned_latitude = comment['latitude']
+        cleaned_longitude = comment['longitude']
+        cleaned_score = comment['score']
+        cleaned_created_at = format_datetime(comment['created_at'])
+
+        rdf_data = f"""
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX mirt: <{base_uri}>
+        PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+        <{base_uri}/reddit/comment{cleaned_id}> rdf:type mirt:Comment ;
+                    mirt:hasId "{cleaned_id}" ;
+                    mirt:hasPostId "{cleaned_post_id}" ;
+                    mirt:hasText "{cleaned_text}" ;
+                    mirt:hasLocation "{cleaned_location}" ;
+                    geo:lat "{cleaned_latitude}" ;
+                    geo:long "{cleaned_longitude}" ;
+                    mirt:hasScore {cleaned_score} ;
+                    mirt:hasCreatedAt "{cleaned_created_at}" .
+        """
+
+        rdf_data_fuseki = f"""
+        <{base_uri}/reddit/comment{cleaned_id}> rdf:type mirt:Comment ;
+                    mirt:hasId "{cleaned_id}" ;
+                    mirt:hasPostId "{cleaned_post_id}" ;
+                    mirt:hasText "{cleaned_text}" ;
+                    mirt:hasLocation "{cleaned_location}" ;
+                    geo:lat "{cleaned_latitude}" ;
+                    geo:long "{cleaned_longitude}" ;
+                    mirt:hasScore {cleaned_score} ;
+                    mirt:hasCreatedAt "{cleaned_created_at}" .
+        """
+        if validate_rdf(rdf_data):
+            insert_query = f"""
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX mirt: <{base_uri}>
+                PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+                INSERT DATA {{
+                    {rdf_data_fuseki}
+                }}
+            """
+            mapped_data.append(insert_query)
+
+    return mapped_data
+
+
+
 def get_and_insert_comments(request):
     reddit_comments = get_reddit_comments(request)
-    mapped_data = map_comments_to_ontology(reddit_comments)
+    mapped_data = map_comments_to_ontology_v2(reddit_comments)
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)

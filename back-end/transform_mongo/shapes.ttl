@@ -1,0 +1,40 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org/> .
+@prefix mirt_ont: <http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#> .
+
+mirt_ont:PostShape
+  a sh:NodeShape ;
+  sh:targetClass mirt_ont:Post ;
+  sh:property [
+    sh:path mirt_ont:title ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:text ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:subreddit ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:num_comments ;
+    sh:datatype xsd:int ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:score ;
+    sh:datatype xsd:int ;
+  ] .
+
+mirt_ont:CommentShape
+  a sh:NodeShape ;
+  sh:targetClass mirt_ont:Comment ;
+  sh:property [
+    sh:path mirt_ont:text ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:score ;
+    sh:datatype xsd:int ;
+  ] .
