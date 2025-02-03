@@ -42,7 +42,15 @@ const Dashboard = () => {
                     if (item.latitude && item.longitude) {
                         const migrationData = {
                             coords: [parseFloat(item.latitude), parseFloat(item.longitude)],
-                            description: item.title || `Post from ${item.subreddit}`,
+                            title: item.title || `Comment from ${item.subreddit}`,
+                            text: item.text.length > 130 ? item.text.substring(0, 130) + '...' : item.text || 'No text available',
+                            score: item.score || 0,
+                            num_comments: item.num_comments || 0,
+                            created_at: item.created_at || 'No date available',
+                            location: item.location || 'No location available',
+                            subreddit: item.subreddit || 'No subreddit available',
+                            url: item.url || 'No URL available',
+
                         };
 
                         if (item.subreddit === "birding") {
@@ -99,6 +107,22 @@ const Dashboard = () => {
                 colored: humansColored,
             },
         };
+
+        const customPopup = (data) => {
+            return `
+              <div>
+                <h4>${data.title}</h4>
+                <p><strong>Text:</strong> ${data.text || 'No description available'}</p>
+                <p><strong>Score:</strong> ${data.score}</p>
+                <p><strong>Comments:</strong> ${data.num_comments}</p>
+                <p><strong>Created at:</strong> ${new Date(data.created_at).toLocaleString()}</p>
+                <p><strong>Location:</strong> ${data.location}</p>
+                <p><strong>Subreddit:</strong> ${data.subreddit}</p>
+                <p><a href="${data.url}" target="_blank">Visit post</a></p>
+                ${data.locations && data.locations[0] ? `<p><a href="${data.locations[0]}" target="_blank">More info about location</a></p>` : ''}
+              </div>
+            `;
+          };
 
         const createCustomIcon = (type, color) => {
             return L.icon({
@@ -200,21 +224,45 @@ const Dashboard = () => {
             birdLayer.clearLayers();
             birdMigrations.forEach(event =>
                 birdLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon("bird", markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("bird", markerType) }).bindPopup(`
+                        <h4>${event.title}</h4>
+                        <p><strong>Text:</strong> ${event.text}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <p><strong>Comments:</strong> ${event.num_comments}</p>
+                        <p><strong>Score:</strong> ${event.score}</p>
+                        <p><strong>Created at:</strong> ${event.created_at}</p>
+                        <p><a href="${event.url}" target="_blank">Visit post</a></p>
+                    `)
                 )
             );
 
             humanLayer.clearLayers();
             humanMigrations.forEach(event =>
                 humanLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon("humans", markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("humans", markerType) }).bindPopup(`
+                        <h4>${event.title}</h4>
+                        <p><strong>Text:</strong> ${event.text}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <p><strong>Comments:</strong> ${event.num_comments}</p>
+                        <p><strong>Score:</strong> ${event.score}</p>
+                        <p><strong>Created at:</strong> ${event.created_at}</p>
+                        <p><a href="${event.url}" target="_blank">Visit post</a></p>
+                    `)
                 )
             );
 
             extraterrestrialLayer.clearLayers();
             extraterrestrialMigrations.forEach(event =>
                 extraterrestrialLayer.addLayer(
-                    L.marker(event.coords, { icon: createCustomIcon("extraterrestrial", markerType) }).bindPopup(event.description)
+                    L.marker(event.coords, { icon: createCustomIcon("extraterrestrial", markerType) }).bindPopup(`
+                        <h4>${event.title}</h4>
+                        <p><strong>Text:</strong> ${event.text}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <p><strong>Comments:</strong> ${event.num_comments}</p>
+                        <p><strong>Score:</strong> ${event.score}</p>
+                        <p><strong>Created at:</strong> ${event.created_at}</p>
+                        <p><a href="${event.url}" target="_blank">Visit post</a></p>
+                    `)
                 )
             );
         };
@@ -296,7 +344,7 @@ const Dashboard = () => {
         <div vocab='https://schema.org/' typeof='WebPage'>
             <meta property="description" content="This is a dashboard for monitoring bird, extraterrestrial, and human migration data."></meta>
             <div className="dashboard-container">
-                <UserMonitor />  
+                {/* <UserMonitor />   */}
                 <h1 property='name' className="dashboard-title">Dashboard</h1>
 
                 <div className="map-container">
