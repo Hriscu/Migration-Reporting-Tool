@@ -46,19 +46,19 @@
 
 3. ✔️ An OpenAPI specification regarding the REST API – or, alternatively, a schema for the GraphQL API – provided by the project, including various usage examples and pragmatic case studies. **Relevant images of the OpenAPI specification for the REST API (Swagger) can be found at this link: [https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/OpenAPI_Swagger](https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/OpenAPI_Swagger).**
 
-4. ⌛ A Scholarly HTML technical report. Its digital content will be equivalent to a minimum 10 printed A4 pages) describing the most significant details about:
+4. ✔️ A Scholarly HTML technical report. Its digital content will be equivalent to a minimum 10 printed A4 pages) describing the most significant details about:
 
-* ⌛ Internal data structures/models to be used and managed by the Web application.
+* ✔️ Internal data structures/models to be used and managed by the Web application.
 
-* ⌛ Technical aspects concerning the implemented API(s) – by adopting REST and/or GraphQL – according to the proposed Web system architecture.
+* ✔️ Technical aspects concerning the implemented API(s) – by adopting REST and/or GraphQL – according to the proposed Web system architecture.
 
-* ⌛ Considerations regarding the designed/reused RDF-based knowledge model(s) – for example, the expressiveness and real usage of the proposed and/or reused vocabulary, taxonomy or ontology in the context of the developed system.
+* ✔️ Considerations regarding the designed/reused RDF-based knowledge model(s) – for example, the expressiveness and real usage of the proposed and/or reused vocabulary, taxonomy or ontology in the context of the developed system.
 
-* ⌛ Pragmatic use of external data/knowledge sources – e.g., using various knowledge bases like Wikidata and DBpedia, plus several non-trivial SPARQL queries of interest. Also, explain how the solution conforms to the linked data principles.
+* ✔️ Pragmatic use of external data/knowledge sources – e.g., using various knowledge bases like Wikidata and DBpedia, plus several non-trivial SPARQL queries of interest. Also, explain how the solution conforms to the linked data principles.
 
-* ⌛ A user guide of the developed solution – also available as a Scholarly HTML document including screen-captures and explaining at least 3 case-studies –, plus a (U)HD-quality video demonstration (duration: 5—7 minutes).
+* ✔️ A user guide of the developed solution – also available as a Scholarly HTML document including screen-captures and explaining at least 3 case-studies –, plus a (U)HD-quality video demonstration (duration: 5—7 minutes).
 
-5. ⌛ A fully implemented and deployed – e.g. in the cloud – solution of the software project.
+5. ✔️ A fully implemented and deployed – e.g. in the cloud – solution of the software project.
 
 **Both Scholarly HTML (technical report and user guide) are available at [https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Technical%20report%20%2B%20user%20guide](https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Technical%20report%20%2B%20user%20guide)**
 <p> <b> All deliverables are mandatory. </b></p>
@@ -67,7 +67,7 @@
 
 <p> Each team could be awarded with an amount of maximum 3 points for: </p>
 
-* ⌛ adopting SHACL to validate RDF data,
+* ✔️ adopting SHACL to validate RDF data, (birds and locations)
 
 * ⌛ proposing a decentralized approach based on the Solid – an open standard for structuring data, digital identities, and applications on the Web,
 
@@ -201,6 +201,10 @@ The project is being developed in multiple phases:
 28. Making Video demonstration
   - **Completed on:** 03/02/2025
   - **Handled by:** Iațu Antonio
+  
+29. Adopting SHACL to validate RDF data (birds and locations)
+  - **Completed on:** 03/02/2025
+  - **Handled by:** Iațu Antonio
 
 ### Tech Stack
 
@@ -209,10 +213,13 @@ The project is being developed in multiple phases:
    
 2. Server
   - [Django](https://www.djangoproject.com/)
+  - [Fuseki](https://jena.apache.org/documentation/fuseki2/)
+  - [Google Cloud VM Instances](https://cloud.google.com/compute/docs/instances)
 
 3. Database
   - [MongoDB](https://www.mongodb.com/products/platform/atlas-database)
 4. DevOps
+  - Cloud deployment - [Heroku](https://devcenter.heroku.com/) 
 
 ###  Color Reference
 
