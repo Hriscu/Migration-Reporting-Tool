@@ -34,11 +34,66 @@
 			<h2>Internal Data Structures</h2>
 			<p>MiRT manages multiple data structures to handle migration events, user interactions, and metadata. The core models include:</p>
 			<ul>
-				<li><strong>Example1:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
-				<li><strong>Example2:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
 				<li><strong>TopicModeling:</strong> Aggregates data for generating statistics regarding comments on a given migration topic.</li>
+				<li><strong>MongoDbClient.py:</strong> Responsible for setting up and maintaining the connection to MongoDB. It provides an interface for other components to interact with the database.</li>
+				<li><strong>RedditComment.py:</strong> Defines the structure of Reddit comment objects, with methods to convert between objects and dictionaries, making it easier to interact with the database.</li>
+				<li><strong>RedditPost.py:</strong> Defines the structure of Reddit post objects, with fields like title, content, location, and keywords. This class also includes methods for converting posts into dictionary form for storage.</li>
+				<li><strong>RedditCommentsRepository.py:</strong> This class provides methods for querying, saving, and updating Reddit comments in the MongoDB database. It simplifies interactions with the Reddit comments collection.</li>
+				<li><strong>RedditPostsRepository.py:</strong> Similar to the RedditCommentsRepository, this repository handles interactions with the Reddit posts collection in MongoDB.</li>
+				<li><strong>RedditService.py:</strong> The service that connects to Reddit's API, fetches posts and comments, extracts relevant information (e.g., location, keywords), and saves the data in MongoDB. It is responsible for ensuring that all data is processed and stored correctly.</li>
+			</ul>
+			<h3>Data Collector API Overview</h3>
+			<p>The <strong>Data Collector API</strong> is responsible for gathering, processing, and storing data from various Reddit posts and comments related to migration topics. It fetches data from selected subreddits like "birding," "aliens," and "IWantOut," processes this data (e.g., extracting location, keywords, and media), and saves it into MongoDB for later analysis.</p>
+
+			<h4>Key Files and Their Roles</h4>
+			<ul>
+				<li><strong>DataPreprocessor.py:</strong> Contains methods to preprocess and clean the text data from Reddit posts and comments before saving them. This ensures that only meaningful and structured data is stored in the database.</li>
+				<li><strong>MongoDbClient.py:</strong> Responsible for setting up and maintaining the connection to MongoDB. It provides an interface for other components to interact with the database.</li>
+				<li><strong>RedditComment.py:</strong> Defines the structure of Reddit comment objects, with methods to convert between objects and dictionaries, making it easier to interact with the database.</li>
+				<li><strong>RedditPost.py:</strong> Defines the structure of Reddit post objects, with fields like title, content, location, and keywords. This class also includes methods for converting posts into dictionary form for storage.</li>
+				<li><strong>RedditCommentsRepository.py:</strong> This class provides methods for querying, saving, and updating Reddit comments in the MongoDB database. It simplifies interactions with the Reddit comments collection.</li>
+				<li><strong>RedditPostsRepository.py:</strong> Similar to the RedditCommentsRepository, this repository handles interactions with the Reddit posts collection in MongoDB.</li>
+				<li><strong>RedditService.py:</strong> The service that connects to Reddit's API, fetches posts and comments, extracts relevant information (e.g., location, keywords), and saves the data in MongoDB. It is responsible for ensuring that all data is processed and stored correctly.</li>
 			</ul>
 
+			<h4>Data Collection Flow</h4>
+			<ol>
+				<li><strong>Fetch Posts:</strong> The <strong>RedditService</strong> fetches posts from different subreddits such as "birding," "aliens," and "IWantOut." It can be extended to handle other subreddits.</li>
+				<li><strong>Extract Data:</strong> For each post, the service extracts comments, processes the text, and extracts additional data such as keywords and location using the <strong>DataPreprocessor</strong> and <strong>RedditComment</strong> classes.</li>
+				<li><strong>Store Data:</strong> The <strong>RedditPostsRepository</strong> and <strong>RedditCommentsRepository</strong> classes save posts and comments to MongoDB for later analysis.</li>
+				<li><strong>Location Extraction:</strong> The <strong>RedditService</strong> uses a geolocation service (e.g., <strong>Geopy</strong>) to extract location coordinates from text, which are stored alongside the post and comment data.</li>
+			</ol>
+
+			<h4>Example of Data Flow</h4>
+			<ol>
+				<li>The service fetches a Reddit post from the "birding" subreddit.</li>
+				<li>It then extracts comments from that post, cleans the text using the <strong>DataPreprocessor</strong> class, and identifies keywords such as "bird" and "migration."</li>
+				<li>The service extracts the location mentioned in the post or comment using the <strong>RedditService</strong> and saves this information alongside the post and comment data.</li>
+				<li>All data is stored in MongoDB, which can then be queried for analysis, reporting, or visualization.</li>
+			</ol>
+
+			<p>This structure ensures that the data collected from Reddit is clean, well-structured, and ready for further analysis, such as migration event tracking or user sentiment analysis.</p>
+
+			<h3>Business Process Model (BPMN)</h3>
+			<p>The following diagram illustrates the business process flow for data collection:</p>
+			<img src="resources/BPMN_DataCollectorAPI.png" alt="Business Process BPMN Diagram" style="width: 80%; max-width: 800px; display: block; margin: 20px auto;">
+
+			<h3>UML Diagram</h3>
+			<p>The following UML diagram shows the system's design and class structure:</p>
+			<img src="resources/UML_DataCollectorAPI.png" alt="UML Diagram" style="width: 80%; max-width: 800px; display: block; margin: 20px auto;">
+
+			<h3>C4 Diagrams</h3>
+			<h4>Context Diagram (Level 1)</h4>
+			<p>This diagram shows the overall system and its interactions with external entities:</p>
+			<img src="resources/C4_level_1_diagram.jpeg" alt="Context Diagram" style="width: 80%; max-width: 800px; display: block; margin: 20px auto;">
+
+			<h4>Container Diagram (Level 2)</h4>
+			<p>This diagram provides a detailed view of the system's containers and their responsibilities:</p>
+			<img src="resources/C4_level_2_diagram.jpeg" alt="Container Diagram" style="width: 80%; max-width: 800px; display: block; margin: 20px auto;">
+
+			<h4>Component Diagram (Level 3)</h4>
+			<p>This diagram breaks down the containers into individual components, illustrating their interactions:</p>
+			<img src="resources/C4_level_3_data_collector_diagram.jpeg" alt="Component Diagram" style="width: 80%; max-width: 800px; display: block; margin: 20px auto;">
 			<!-- Topic Modeling Details -->
 			<h3>Topic Modeling Details</h3>
 			<p>The <strong>TopicModeling</strong> module is responsible for analyzing comments related to migration events. It uses Latent Dirichlet Allocation (LDA) to identify hidden topics and generate statistical insights.</p>
@@ -67,7 +122,7 @@
 				<li><strong>trainig_data_collector.py:</strong> Aggregates raw data from various sources into training datasets.</li>
 				<li><strong>SavedModels/:</strong> Stores trained LDA models for future analysis.</li>
 			</ul>
-
+			
 			<h4>Workflow Overview</h4>
 			<ol>
 				<li>Preprocess comments using <code>preprocessor.py</code>.</li>
@@ -138,15 +193,71 @@
 }</code></pre>
         </section>
 
-        <section id="linked-data">
-            <h2>Linked Data Conformance</h2>
-            <p>MiRT adheres to Linked Data principles by:</p>
-            <ul>
-                <li>Using URIs to identify resources uniquely.</li>
-                <li>Providing dereferenceable HTTP links for accessing data.</li>
-                <li>Linking to external datasets for enriched semantic context.</li>
-            </ul>
-        </section>
+		<section id="linked-data">
+			<h2>Linked Data Conformance</h2>
+			<p>MiRT (Migration Reporting Tool) adheres to the core principles of Linked Data to ensure semantic interoperability, data integration, and enriched contextualization of migration-related information. This section outlines the key principles, implementation strategies, and benefits of Linked Data conformance within MiRT.</p>
+
+			<h3>Principles of Linked Data</h3>
+			<ul>
+				<li><strong>Use URIs to Identify Resources:</strong> Each migration event, entity (such as birds, humans, robots), location, and metadata element within MiRT is assigned a unique Uniform Resource Identifier (URI). This ensures that each data element can be referenced unambiguously across systems.</li>
+				<li><strong>Make URIs Dereferenceable:</strong> The URIs are accessible via standard HTTP protocols, enabling users and applications to retrieve meaningful information about the resources through simple web requests.</li>
+				<li><strong>Provide Data in Standard RDF Formats:</strong> MiRT represents data in RDF (Resource Description Framework) format using standardized vocabularies from DBpedia, Wikidata, and custom ontologies specific to migration events. This promotes semantic consistency and facilitates data integration with external datasets.</li>
+				<li><strong>Include Links to External Datasets:</strong> Where relevant, MiRT connects internal data to external knowledge bases such as Wikidata, DBpedia, and GeoNames. This linkage enriches MiRT’s datasets with additional context, enhancing analytical capabilities.</li>
+			</ul>
+
+			<h3>Implementation in MiRT</h3>
+			<h4>RDF Data Model</h4>
+			<p>MiRT's RDF data model defines key classes and properties for representing migration events:</p>
+			<ul>
+				<li><strong>Classes:</strong>
+					<ul>
+						<li><code>:MigrationEvent</code> (with properties like <code>:date</code>, <code>:species</code>, <code>:location</code>)</li>
+						<li><code>:Entity</code> (covering individuals like <code>:Bird</code>, <code>:Human</code>, <code>:Robot</code>, <code>:Extraterrestrial</code>)</li>
+						<li><code>:Location</code> (linked to geospatial identifiers via GeoNames or Wikidata)</li>
+					</ul>
+				</li>
+				<li><strong>Properties:</strong> <code>:hasSpecies</code>, <code>:hasLocation</code>, <code>:observedAt</code>, <code>:reportedBy</code></li>
+			</ul>
+
+			<h4>Example RDF Triples</h4>
+			<pre><code>@prefix : &lt;http://mirt.org/ontology#&gt; .
+		@prefix dbo: &lt;http://dbpedia.org/ontology/&gt; .
+		@prefix wd: &lt;http://www.wikidata.org/entity/&gt; .
+
+		:migrationEvent123 a :MigrationEvent ;
+			:hasSpecies wd:Q5113 ;  # Refers to "Bird"
+			:hasLocation wd:Q60 ;   # Refers to "New York City"
+			:observedAt "2025-02-01"^^xsd:date ;
+			:reportedBy :RedditPost5678 .</code></pre>
+
+			<h3>SPARQL Query Example</h3>
+			<pre><code>PREFIX : &lt;http://mirt.org/ontology#&gt;
+		PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
+
+		SELECT ?species ?location ?date WHERE {
+		?event a :MigrationEvent ;
+				:hasSpecies ?species ;
+				:hasLocation ?location ;
+				:observedAt ?date .
+		FILTER(?species = wd:Q5113)  # Filter for "Bird"
+		}</code></pre>
+
+			<h3>Benefits of Linked Data Conformance</h3>
+			<ul>
+				<li><strong>Enhanced Data Interoperability:</strong> Seamless integration with external knowledge bases like DBpedia, Wikidata, and GeoNames.</li>
+				<li><strong>Improved Data Discoverability:</strong> Publicly dereferenceable URIs enable easy data discovery and linkage by third-party applications.</li>
+				<li><strong>Richer Contextualization:</strong> Linking to external datasets provides additional context, enriching migration event analyses.</li>
+				<li><strong>Flexible Data Querying:</strong> SPARQL enables complex queries to uncover patterns, trends, and insights.</li>
+			</ul>
+
+			<h3>Linked Data Visualization</h3>
+			<p>The following diagram illustrates how MiRT connects internal data with external datasets using Linked Data principles:</p>
+			<img src="resources/linked_data_architecture.png" alt="Linked Data Architecture">
+
+			<h3>Conclusion</h3>
+			<p>By adopting Linked Data principles, MiRT not only enhances the semantic richness and interoperability of its migration-related data but also positions itself as a valuable contributor to the broader Linked Open Data (LOD) ecosystem. This approach fosters collaborative research, data sharing, and comprehensive migration analysis across various domains.</p>
+		</section>
+
     </main>
 
     <footer>
