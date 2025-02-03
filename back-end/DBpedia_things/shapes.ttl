@@ -1,0 +1,40 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org/> .
+@prefix mirt_ont: <http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#> .
+
+mirt_ont:BirdShape
+  a sh:NodeShape ;
+  sh:targetClass mirt_ont:Bird ;
+  sh:property [
+    sh:path mirt_ont:scientific_name ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:name ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:description ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:url ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:thumbnail ;
+    sh:datatype xsd:string ;
+  ] .
+
+mirt_ont:LocationShape
+  a sh:NodeShape ;
+  sh:targetClass mirt_ont:Location ;
+  sh:property [
+    sh:path mirt_ont:name ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path mirt_ont:description ;
+    sh:datatype xsd:string ;
+  ] .

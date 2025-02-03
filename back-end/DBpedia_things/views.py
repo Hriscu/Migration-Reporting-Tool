@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from SPARQLWrapper import SPARQLWrapper, JSON, XML
 from rdflib import Graph
-import re
+from pyshacl import validate
+import os
 
 def get_bird_info_json(request):
     sparql = SPARQLWrapper("https://dbpedia.org/sparql")
@@ -145,6 +146,30 @@ def get_bird_info(request):
         return []
 
 
+def validate_rdf(data):
+    shacl_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'shapes.ttl')
+
+    # print("Validating RDF Data:\n", data)
+
+    g = Graph()
+    g.parse(data=data, format='turtle')
+
+    
+
+    g_shacl = Graph()
+    g_shacl.parse(shacl_file, format='turtle')
+
+    conforms, results_graph, results_text = validate(g, shacl_graph=shacl_file)
+
+    if conforms:
+        print("The data is valid according to the shape.")
+        return True
+    else:
+        print("The data is not valid according to the shape.")
+        return False
+
+
+
 def clean_value(value):
     if value is None or value.strip() == "":
         return "Unknown"
@@ -201,6 +226,67 @@ def map_bird_to_ontology(data):
     return mapped_data
 
 
+
+def map_bird_to_ontology_v2(data):
+    mapped_data = []
+
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for bird in data:
+        cleaned_species = escape_special_characters(clean_value(bird['species']))
+        cleaned_scientific_name = escape_special_characters(clean_value(bird['scientific_name']))
+        cleaned_family = escape_special_characters(clean_value(bird['family']))
+        cleaned_genus = escape_special_characters(clean_value(bird['genus']))
+        cleaned_thumbnail = escape_special_characters(clean_value(bird['thumbnail']))
+        cleaned_url = escape_special_characters(clean_value(bird['url']))
+        cleaned_description = escape_special_characters(clean_value(bird['description']))
+        cleaned_name = escape_special_characters(clean_value(bird['name']))
+
+        species_values = cleaned_species.split(",") if "," in cleaned_species else [cleaned_species]
+        species_statements = " ".join(f'<{bird["uri"]}> mirt:hasSpecies "{species.strip()}" .' for species in species_values)
+
+        rdf_data = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX mirt: <{base_uri}>
+
+            <{bird['uri']}> rdf:type mirt:Bird ;
+                                mirt:hasScientificName "{cleaned_scientific_name}" ;
+                                mirt:hasFamily "{cleaned_family}" ;
+                                mirt:hasGenus "{cleaned_genus}" ;
+                                mirt:hasThumbnail "{cleaned_thumbnail}" ;
+                                mirt:hasUrl "{cleaned_url}" ;
+                                mirt:hasDescription "{cleaned_description}" ;
+                                rdfs:label "{cleaned_name}" .
+        """
+
+        rdf_data_fuseki = f"""
+            <{bird['uri']}> rdf:type mirt:Bird ;
+                                mirt:hasScientificName "{cleaned_scientific_name}" ;
+                                mirt:hasFamily "{cleaned_family}" ;
+                                mirt:hasGenus "{cleaned_genus}" ;
+                                mirt:hasThumbnail "{cleaned_thumbnail}" ;
+                                mirt:hasUrl "{cleaned_url}" ;
+                                mirt:hasDescription "{cleaned_description}" ;
+                                rdfs:label "{cleaned_name}" .
+        """
+
+        if validate_rdf(rdf_data):
+            insert_query = f"""
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX mirt: <{base_uri}>
+
+                INSERT DATA {{
+                    {rdf_data_fuseki}
+                    {species_statements}
+                }}
+            """
+            mapped_data.append(insert_query)
+
+    return mapped_data
+
+
 def insert_data_to_fuseki(queries):
     sparql = SPARQLWrapper("https://my-fuseki-server-27d8893374fe.herokuapp.com/birds-and-locations/update")
     sparql.setMethod("POST")
@@ -241,7 +327,7 @@ def insert_equivalence_to_fuseki():
 def get_and_insert_bird_data(request):
     insert_equivalence_to_fuseki()
     birds_data = get_bird_info(request)
-    mapped_data = map_bird_to_ontology(birds_data)
+    mapped_data = map_bird_to_ontology_v2(birds_data)
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)
@@ -397,9 +483,58 @@ def map_location_to_ontology(data):
     return mapped_data
 
 
+def map_location_to_ontology_v2(data):
+    mapped_data = []
+
+    base_uri = "http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#"
+
+    for location in data:
+        cleaned_name = escape_special_characters(clean_value(location['name']))
+        cleaned_description = escape_special_characters(clean_value(location['description']))
+
+        latitude = location['coordinates'].get('latitude', "Unknown")
+        longitude = location['coordinates'].get('longitude', "Unknown")
+
+        rdf_data = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+            PREFIX mirt: <{base_uri}>
+
+            <{location['uri']}> rdf:type mirt:Location ;
+                                        rdfs:label "{cleaned_name}" ;
+                                        mirt:hasDescription "{cleaned_description}" ;
+                                        geo:lat {latitude} ;
+                                        geo:long {longitude} .
+        """
+
+        rdf_data_fuseki = f"""
+            <{location['uri']}> rdf:type mirt:Location ;
+                                        rdfs:label "{cleaned_name}" ;
+                                        mirt:hasDescription "{cleaned_description}" ;
+                                        geo:lat {latitude} ;
+                                        geo:long {longitude} .
+        """
+
+        if validate_rdf(rdf_data):
+            insert_query = f"""
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+                PREFIX mirt: <{base_uri}>
+
+                INSERT DATA {{
+                    {rdf_data_fuseki}
+                }}
+            """
+            mapped_data.append(insert_query)
+
+    return mapped_data
+
+
 def get_and_insert_location_data(request):
     locations_data = get_location_info(request)
-    mapped_data = map_location_to_ontology(locations_data)
+    mapped_data = map_location_to_ontology_v2(locations_data)
     insert_data_to_fuseki(mapped_data)
 
     return HttpResponse("Data inserted successfully", status=200)
