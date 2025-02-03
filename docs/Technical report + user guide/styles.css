@@ -55,6 +55,7 @@ main {
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
+	padding-bottom: 60px;
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
