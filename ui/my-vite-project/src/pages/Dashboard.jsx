@@ -344,7 +344,7 @@ const Dashboard = () => {
         <div vocab='https://schema.org/' typeof='WebPage'>
             <meta property="description" content="This is a dashboard for monitoring bird, extraterrestrial, and human migration data."></meta>
             <div className="dashboard-container">
-                {/* <UserMonitor />   */}
+                <UserMonitor />  
                 <h1 property='name' className="dashboard-title">Dashboard</h1>
 
                 <div className="map-container">
