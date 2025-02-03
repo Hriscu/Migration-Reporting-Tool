@@ -44,7 +44,7 @@
 
 2. ⌛ A general (service-oriented) architecture of the Web application + the overall design from the point of view of a software engineer (for example: main modules, software architecture diagrams, input/output data formats, data/task flows, etc.) and concerning the end users. **From an architectural perspective, the software architecture diagrams can be found at [https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Software%20architecture%20diagrams](https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/Software%20architecture%20diagrams). From a design perspective, the design is responsive.**
 
-3. ⌛ An OpenAPI specification regarding the REST API – or, alternatively, a schema for the GraphQL API – provided by the project, including various usage examples and pragmatic case studies.
+3. ⌛ An OpenAPI specification regarding the REST API – or, alternatively, a schema for the GraphQL API – provided by the project, including various usage examples and pragmatic case studies. **Relevant images of the OpenAPI specification for the REST API (Swagger) can be found at this link: [https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/OpenAPI_Swagger](https://github.com/Hriscu/Migration-Reporting-Tool/tree/main/docs/OpenAPI_Swagger).**
 
 4. ⌛ A Scholarly HTML technical report. Its digital content will be equivalent to a minimum 10 printed A4 pages) describing the most significant details about:
 
