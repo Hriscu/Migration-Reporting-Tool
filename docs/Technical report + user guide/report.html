@@ -34,22 +34,43 @@
             <h2>Internal Data Structures</h2>
             <p>MiRT manages multiple data structures to handle migration events, user interactions, and metadata. The core models include:</p>
             <ul>
-                <li><strong>MigrationEvent:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
-                <li><strong>UserPreferences:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
-                <li><strong>StatisticalData:</strong> Aggregates data for generating migration statistics and trends.</li>
+                <li><strong>Example1:</strong> Captures details like species/type, GPS coordinates, timestamp, and source (direct input or social media).</li>
+                <li><strong>Example2:</strong> Stores user settings such as marker customization, filters, and export preferences.</li>
+                <li><strong>TopicModeling:</strong> Aggregates data for generating statistics regarding comments on a given migration topic.</li>
             </ul>
         </section>
 
-        <section id="api-architecture">
-            <h2>API Architecture</h2>
-            <p>MiRT employs RESTful APIs to manage data interactions:</p>
-            <ul>
-                <li><strong>GET /migrations:</strong> Retrieves migration events with optional filters for entity type, date range, and location.</li>
-                <li><strong>POST /report:</strong> Allows users to report new migration events with metadata.</li>
-                <li><strong>GET /statistics:</strong> Provides statistical summaries using aggregated data.</li>
-                <li><strong>GraphQL Endpoint:</strong> Offers flexible querying capabilities for advanced data analytics.</li>
-            </ul>
-        </section>
+		<section id="api-architecture">
+			<h2>API Architecture</h2>
+			<p>MiRT employs RESTful APIs to manage data interactions for comments and posts, allowing for CRUD operations on both entities.</p>
+
+			<!-- Comments API Section -->
+			<h3>Comments API</h3>
+			<ul>
+				<li><strong>GET /comments/</strong> - Retrieves a list of all comments. (Endpoint: <code>comments_list</code>)</li>
+				<li><strong>POST /comments/</strong> - Creates a new comment. (Endpoint: <code>comments_create</code>)</li>
+				<li><strong>GET /comments/{_id}/</strong> - Retrieves a specific comment by ID. (Endpoint: <code>comments_read</code>)</li>
+				<li><strong>PUT /comments/{_id}/</strong> - Updates an existing comment entirely. (Endpoint: <code>comments_update</code>)</li>
+				<li><strong>PATCH /comments/{_id}/</strong> - Partially updates specific fields of a comment. (Endpoint: <code>comments_partial_update</code>)</li>
+				<li><strong>DELETE /comments/{_id}/</strong> - Deletes a comment by ID. (Endpoint: <code>comments_delete</code>)</li>
+				<li><strong>GET /comments/{post_id}/</strong> - Retrieves comments related to a specific post. (Endpoint: <code>comments_read</code>)</li>
+				<li><strong>POST /comments/{post_id}/</strong> - Creates a comment for a specific post. (Endpoint: <code>comments_create</code>)</li>
+			</ul>
+
+			<!-- Posts API Section -->
+			<h3>Posts API</h3>
+			<ul>
+				<li><strong>GET /posts/</strong> - Retrieves a list of all posts. (Endpoint: <code>posts_list</code>)</li>
+				<li><strong>POST /posts/</strong> - Creates a new post. (Endpoint: <code>posts_create</code>)</li>
+				<li><strong>GET /posts/{_id}/</strong> - Retrieves a specific post by ID. (Endpoint: <code>posts_read</code>)</li>
+				<li><strong>PUT /posts/{_id}/</strong> - Updates an existing post entirely. (Endpoint: <code>posts_update</code>)</li>
+				<li><strong>PATCH /posts/{_id}/</strong> - Partially updates specific fields of a post. (Endpoint: <code>posts_partial_update</code>)</li>
+				<li><strong>DELETE /posts/{_id}/</strong> - Deletes a post by ID. (Endpoint: <code>posts_delete</code>)</li>
+			</ul>
+
+			<p>All API endpoints return data in JSON format. For operations that modify resources (POST, PUT, PATCH), ensure the request body follows the expected schema, including required fields such as <code>title</code>, <code>content</code>, or <code>text</code> where applicable.</p>
+		</section>
+
 
         <section id="rdf-models">
             <h2>RDF-Based Knowledge Models</h2>
