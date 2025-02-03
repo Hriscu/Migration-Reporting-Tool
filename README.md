@@ -12,9 +12,9 @@
 
 * ✔️ For the final assessment, the team must provide the full functionality of the developed solution, according to the specific requirements stated in the project description and discussed in the first 7 weeks of the semester during practical works (WADe labs).
 
-* ⌛ The project should be developed and deployed according to the actual practices in Web engineering (e.g., documentation, test driven development, modularity, bug reporting, etc.) by using a modern approach regarding source-code management like Bitbucket, GitHub, or similar cloud-based solutions.
+* ✔️ The project should be developed and deployed according to the actual practices in Web engineering (e.g., documentation, test driven development, modularity, bug reporting, etc.) by using a modern approach regarding source-code management like Bitbucket, GitHub, or similar cloud-based solutions.
 
-* ⌛ Resource representations to be processed by the (Web/mobile) client will include a valid HTML5 code, plus schema.org and RDFa constructs.
+* ✔️ Resource representations to be processed by the (Web/mobile) client will include a valid HTML5 code, plus schema.org and RDFa constructs.
 
 * ✔️ Each thing (resource) of interest will be exposed (and shared) by using a generated URL and/or QR code. **For more information, see the Acknowledgements section of this README.**
 
@@ -24,7 +24,7 @@
 
 * ⌛ A proper use of various "exotic" programming paradigms like functional, distributed, parallel, reactive, etc.
 
-* ⌛ Adopting a cloud-based solution – i.e. for the (RDF) data storage and/or the Web application deployment.
+* ✔️ Adopting a cloud-based solution – i.e. for the (RDF) data storage and/or the Web application deployment.
 
 * ⌛ Using specific design patterns regarding the Web application architecture and/or the knowledge modeling – for example, applying various ontology design patterns.
 
