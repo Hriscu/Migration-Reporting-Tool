@@ -27,7 +27,26 @@
     <main>
         <section id="introduction">
             <h2>Introduction</h2>
-            <p>The Migration Reporting Tool (MiRT) is an intelligent web system designed to visualize migration events of various entities (birds, humans, robots, extraterrestrial beings) in real-time using interactive maps. This report outlines the technical architecture, internal data models, API specifications, and the integration of external knowledge sources.</p>
+			<h4>Overview of MiRT (Migration Reporting Tool)</h4>
+			<p>The Migration Reporting Tool (MiRT) is an advanced web application aimed at helping users understand and analyze migration patterns of various entities, such as birds, humans, and extraterrestrial beings. The main objective of MiRT is to offer a secure, reliable, and user-friendly platform that provides comprehensive data to gain valuable insights into migration events. To improve user engagement and experience, MiRT features interactive map visualizations, data-driven statistics, and in-depth analysis of migration subtopics. Additionally, users can save maps and track migration trends, ensuring they have the tools needed to explore and interpret the complex dynamics of migration.
+			</p>
+
+			<h4>Technology Choices and Rationale</h4>
+			
+			<h5>Reddit API</h5>
+			<p>One of the key decisions in the development of MiRT was the selection of the Reddit API for retrieving migration-related event data. After evaluating various data sources, we favored Reddit due to its easy-to-use API and the practical experience our team has with it. Reddit offers a wealth of discussions, posts, and comments that provide rich, real-time data about migration events. Its open access and simplicity for integration made it the ideal choice for gathering and analyzing migration data, helping us to quickly iterate on our application.</p>
+
+			<h5>Heroku Platform</h5>
+			For deployment, MiRT leverages Heroku. We chose Heroku due to our team's previous experience with the platform and its strong reputation for ease of use and user-friendliness. Heroku offers a streamlined deployment process, making it particularly beneficial for small to medium-sized projects. Its ability to scale and its seamless integration with various databases and add-ons made it a reliable option for ensuring the availability and stability of our application.
+
+			<h5>Fuseki as the Triple Store</h5>
+			<p>In terms of data management, we selected Fuseki as our SPARQL endpoint and triple store solution. This choice was primarily driven by Fuseki’s convenience and accessibility, which allows for efficient querying and storage of RDF data. As a versatile and lightweight solution, Fuseki integrates seamlessly with the other technologies used in MiRT, providing a robust platform for managing linked data related to migration events, species, and locations.</p>
+
+			<h5>Google Cloud VM Instances</h5>
+			<p>For hosting and computing resources, we chose Google Cloud VM Instances. This decision was based on Google Cloud’s reputation for reliability, security, and the opportunity to experiment with new technologies. By utilizing Google Cloud, we ensure that MiRT benefits from a secure and scalable environment, capable of handling data processing and storage requirements efficiently.</p>
+
+			<h5>Django Backend Framework</h5>
+			<p>On the backend, MiRT is powered by Django, a high-level Python web framework known for its robustness and solid architectural structure. Django allows for excellent separation of concerns, providing a clear distinction between the frontend and backend layers. This separation facilitates easier development and maintenance, while also ensuring that the backend can scale and perform efficiently. Django's features, such as its built-in authentication system and modularity, made it an ideal choice for building a secure and maintainable platform like MiRT.</p>
         </section>
 
 		<section id="data-structures">
@@ -132,6 +151,20 @@
 			</ol>
 
 			<p>This structure helps MiRT provide deeper insights into migration-related discussions through automated topic discovery and analysis.</p>
+
+			<h4>Backend</h4>
+			
+			<p>In addition to the data collector API, our backend offers a variety of essential services. Built with Django, the backend follows a microservices architecture, ensuring scalability and flexibility. Key services include:</p>
+
+			<ul>
+				<li><strong>mirt_back:</strong> This core service houses the fundamental components of the application. It acts as the central orchestrator, managing and directing which services are called and when.</li>
+				<li><strong>DBpedia_things:</strong> This service enriches the database by fetching valuable information about birds and locations, enhancing the data we work with.</li>
+				<li><strong>transform_mongo:</strong> Responsible for interacting with the MongoDB Atlas database, this service retrieves posts and comments, transforming the data into RDF format for later upload to Fuseki.</li>
+				<li><strong>associate_things:</strong> This service connects posts/comments with birds/locations. It processes data from various datasets, establishing the necessary links between them.</li>
+				<li><strong>data_provider:</strong> This service supplies the frontend with filtered and relevant information, ensuring that users receive high-quality, meaningful data for their analysis.</li>
+			</ul>
+
+
 		</section>
 
 
@@ -171,8 +204,10 @@
             <h2>RDF-Based Knowledge Models</h2>
             <p>MiRT leverages RDF to structure and semantically enrich migration data. We utilize vocabularies from DBpedia and Wikidata to ensure data interoperability:</p>
             <ul>
-                <li><strong>Ontology Design:</strong> Defines classes like <em>MigrationEvent</em>, <em>Entity</em>, and <em>Location</em>.</li>
-                <li><strong>SPARQL Endpoint:</strong> Enables complex queries to explore migration patterns and relationships.</li>
+                <li><strong>Ontology Design:</strong> This defines the core classes of our ontology, such as Bird, <em>Location</em>, <em>Post</em>, and <em>Comment</em>, along with their relationships and properties. It serves as the backbone of the entire dataset, providing a structured framework upon which instances are built.</li>
+                <li><strong>SPARQL Endpoint:</strong> A crucial access point for querying the RDF database, allowing users to execute a wide range of queries and retrieve relevant information based on their search criteria.</li>
+				<li><strong>Data Enrichment:</strong>Since data is never enough, we leverage <em>DBpedia</em> to obtain additional information. As a reliable and well-structured source, it provides accurate and contextually relevant results that enhance our dataset.</li>
+				<li><strong>SHACL Validation:</strong>Beyond offering an endpoint that delivers valuable information, robust validation is essential. This is where <em>SHACL</em> comes into play, enforcing constraints on our data to ensure consistency, integrity, and reliability in our queries.</li>
             </ul>
         </section>
 
@@ -180,29 +215,41 @@
             <h2>Use of External Data Sources</h2>
             <p>MiRT integrates external data from:</p>
             <ul>
-                <li><strong>Wikidata & DBpedia:</strong> For enriching migration events with contextual knowledge.</li>
+                <li><strong>DBpedia:</strong> To further enrich our RDF database, we leveraged the DBpedia endpoint. By executing SPARQL queries, we retrieved a wide range of valuable information about birds, locations, and more. This allowed us to enhance the dataset with relevant details, ultimately helping us build a fully functional and user-friendly application.</li>
                 <li><strong>Mockaroo:</strong> For generating synthetic data during testing phases.</li>
-                <li><strong>free-for.dev APIs:</strong> To incorporate additional geospatial and environmental data.</li>
+                <li><strong>free-for.dev APIs:</strong> To accurately present users with the migrations they were searching for, we needed to obtain geospatial information based on the referenced locations. To streamline this process and enhance the user experience, we utilized specialized tools that allowed us to efficiently integrate and process this data within the application.</li>
             </ul>
             <p>Example SPARQL Query:</p>
-            <pre><code>SELECT ?species ?location WHERE {
-  ?event rdf:type :MigrationEvent .
-  ?event :species ?species ;
-         :location ?location .
-  FILTER(?species = "Bird")
-}</code></pre>
+            <pre><code>SELECT ?bird ?label ?abstract ?scientificName ?family ?species ?genus ?thumbnail ?url WHERE {
+				?bird rdf:type dbo:Bird ;
+					rdfs:label ?label ;
+					dbo:abstract ?abstract .
+				
+				OPTIONAL { ?bird dbp:scientificName ?scientificName . }
+				OPTIONAL { ?bird dbp:family ?family . }
+				OPTIONAL { ?bird dbp:species ?species . }
+				OPTIONAL { ?bird dbp:genus ?genus . }
+				OPTIONAL { ?bird dbo:thumbnail ?thumbnail . }
+				OPTIONAL { ?bird dbp:url ?url . }
+				
+				FILTER (lang(?label) = "en")
+				FILTER (lang(?abstract) = "en")
+			}
+			LIMIT 5000</code></pre>
         </section>
 
 		<section id="linked-data">
 			<h2>Linked Data Conformance</h2>
-			<p>MiRT (Migration Reporting Tool) adheres to the core principles of Linked Data to ensure semantic interoperability, data integration, and enriched contextualization of migration-related information. This section outlines the key principles, implementation strategies, and benefits of Linked Data conformance within MiRT.</p>
+			<p>MiRT (Migration Reporting Tool) follows the core principles of Linked Data to ensure seamless integration, rich contextualization, and semantic interoperability of migration-related information. By leveraging RDF (Resource Description Framework) and SPARQL queries, MiRT enhances the migration data with external knowledge bases like DBpedia</p>
 
 			<h3>Principles of Linked Data</h3>
 			<ul>
-				<li><strong>Use URIs to Identify Resources:</strong> Each migration event, entity (such as birds, humans, robots), location, and metadata element within MiRT is assigned a unique Uniform Resource Identifier (URI). This ensures that each data element can be referenced unambiguously across systems.</li>
-				<li><strong>Make URIs Dereferenceable:</strong> The URIs are accessible via standard HTTP protocols, enabling users and applications to retrieve meaningful information about the resources through simple web requests.</li>
-				<li><strong>Provide Data in Standard RDF Formats:</strong> MiRT represents data in RDF (Resource Description Framework) format using standardized vocabularies from DBpedia, Wikidata, and custom ontologies specific to migration events. This promotes semantic consistency and facilitates data integration with external datasets.</li>
-				<li><strong>Include Links to External Datasets:</strong> Where relevant, MiRT connects internal data to external knowledge bases such as Wikidata, DBpedia, and GeoNames. This linkage enriches MiRT’s datasets with additional context, enhancing analytical capabilities.</li>
+				<li><strong>Use URIs to Identify Resources:</strong> Each migration event, entity (such as birds, humans or extraterrestrial beings), location, and metadata element within MiRT is assigned a unique Uniform Resource Identifier (URI). This ensures that each data element can be referenced unambiguously across systems.</li>
+				<li><strong>Make URIs Dereferenceable:</strong> This means that when a user or system queries the URI via HTTP, it returns meaningful information about the resource. This is achieved through the integration of external SPARQL endpoints that offer real-time, rich data about the migration events and entities, directly enhancing the contextual data available for analysis.
+
+				For example, by querying a migration event URI, MiRT retrieves not only the event details (species, location, date) but also contextual information about the species and location, pulling in data from sources like Wikidata</li>
+				<li><strong>Provide Data in Standard RDF Formats:</strong> All data in MiRT is represented in the RDF format. This ensures that migration events, locations, and entities are structured in a way that makes them easy to query, analyze, and integrate with other data sources. By adhering to RDF, MiRT provides an open, standardized format that facilitates integration and reuse.</li>
+				<li><strong>Include Links to External Datasets:</strong> MiRT enhances the semantic richness of migration data by linking internal data to external knowledge bases like Wikidata. This linkage provides additional context for species, locations, and migration patterns.</li>
 			</ul>
 
 			<h3>Implementation in MiRT</h3>
@@ -211,36 +258,60 @@
 			<ul>
 				<li><strong>Classes:</strong>
 					<ul>
-						<li><code>:MigrationEvent</code> (with properties like <code>:date</code>, <code>:species</code>, <code>:location</code>)</li>
-						<li><code>:Entity</code> (covering individuals like <code>:Bird</code>, <code>:Human</code>, <code>:Robot</code>, <code>:Extraterrestrial</code>)</li>
-						<li><code>:Location</code> (linked to geospatial identifiers via GeoNames or Wikidata)</li>
+						<li><code>:Migration</code> (with properties like <code>:date</code>, <code>:species</code>, <code>:location</code>)</li>
+						<li><code>:LivingBeing</code> (covering individuals like <code>:Bird</code>, <code>:Human</code>, <code>:Extraterrestrial</code>)</li>
+						<li><code>:Location</code> (linked to geospatial identifiers)</li>
 					</ul>
 				</li>
-				<li><strong>Properties:</strong> <code>:hasSpecies</code>, <code>:hasLocation</code>, <code>:observedAt</code>, <code>:reportedBy</code></li>
+				<li><strong>Properties:</strong> <code>:hasSpecies</code>, <code>:hasLocation</code>, <code>:observedAt</code>, <code>:isMentionedIn</code></li>
 			</ul>
 
 			<h4>Example RDF Triples</h4>
-			<pre><code>@prefix : &lt;http://mirt.org/ontology#&gt; .
-		@prefix dbo: &lt;http://dbpedia.org/ontology/&gt; .
-		@prefix wd: &lt;http://www.wikidata.org/entity/&gt; .
-
-		:migrationEvent123 a :MigrationEvent ;
-			:hasSpecies wd:Q5113 ;  # Refers to "Bird"
-			:hasLocation wd:Q60 ;   # Refers to "New York City"
-			:observedAt "2025-02-01"^^xsd:date ;
-			:reportedBy :RedditPost5678 .</code></pre>
+			<pre><code>
+				PREFIX :<http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont/>
+				PREFIX mirt_ont:<http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#>
+				PREFIX owl:<http://www.w3.org/2002/07/owl#>
+				PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+				PREFIX xml:<http://www.w3.org/XML/1998/namespace>
+				PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+				<http://dbpedia.org/resource/Caribbean_dove>
+				rdf:type                    mirt_ont:Bird;
+				rdfs:label                  "Caribbean dove";
+				mirt_ont:hasDescription     "The Caribbean dove (Leptotila jamaicensis) is a species of bird in the family Columbidae. It is found in Belize, the Cayman Islands, Colombia (San Andrés island), Honduras (Bay Islands), Jamaica, and Mexico (Yucatán Peninsula). It has been introduced to the Bahamas.";
+				mirt_ont:hasFamily          "Unknown";
+				mirt_ont:hasGenus           "Leptotila";
+				mirt_ont:hasScientificName  "Unknown";
+				mirt_ont:hasSpecies         "Caribbean dove" , "jamaicensis";
+				mirt_ont:hasThumbnail       "http://commons.wikimedia.org/wiki/Special:FilePath/VioletDove2.jpg?width=300";
+				mirt_ont:hasUrl             "https://www.xeno-canto.org/species/Leptotila-jamaicensis" .</code></pre>
 
 			<h3>SPARQL Query Example</h3>
-			<pre><code>PREFIX : &lt;http://mirt.org/ontology#&gt;
-		PREFIX wd: &lt;http://www.wikidata.org/entity/&gt;
+			<pre><code>PREFIX :<http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont/>
+				PREFIX mirt_ont:<http://www.semanticweb.org/anton/ontologies/2025/0/mirt_ont#>
+				PREFIX owl:<http://www.w3.org/2002/07/owl#>
+				PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+				PREFIX xml:<http://www.w3.org/XML/1998/namespace>
+				PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
 
-		SELECT ?species ?location ?date WHERE {
-		?event a :MigrationEvent ;
-				:hasSpecies ?species ;
-				:hasLocation ?location ;
-				:observedAt ?date .
-		FILTER(?species = wd:Q5113)  # Filter for "Bird"
-		}</code></pre>
+		SELECT ?place ?label ?abstract ?latitude ?longitude
+        WHERE {
+            ?place rdf:type ?type ;
+                rdfs:label ?label ;
+                dbo:abstract ?abstract ;
+                geo:lat ?latitude ;
+                geo:long ?longitude .
+
+            FILTER (lang(?label) = "en")
+            FILTER (lang(?abstract) = "en")
+
+            FILTER (?type IN (dbo:City, dbo:Country, dbo:Region, dbo:Capital))
+
+            FILTER (strlen(?abstract) > 200)  
+        }
+        ORDER BY DESC(strlen(?abstract))  
+        LIMIT 250</code></pre>
 
 			<h3>Benefits of Linked Data Conformance</h3>
 			<ul>
